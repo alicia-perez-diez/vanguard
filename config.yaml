@@ -1,0 +1,18 @@
+data:
+  pt_1: 'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\resources\df_final_web_data_pt_1.txt'
+  pt_2: 'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\resources\df_final_web_data_pt_2.txt'
+  orders: ' .csv'
+  orders_prior: ' .csv'
+  instacart_sample: ' .csv'
+  instacart_labels: ' .csv'
+
+scalers:
+  minmax: '../scalers/minmaxscaler.pickle'
+
+encoders:
+  ohe: ' ../encoders/ohe.pickle'
+
+models:
+  kmeans_randomstate: 1234
+  kmeans_path: 'models/kmeans_scaled_'
+  kmeans_path_k: '/models/kmeans_scaled_3.pickle'
