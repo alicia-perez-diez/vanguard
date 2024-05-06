@@ -1,6 +1,6 @@
 data:
-  pt_1: 'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\resources\df_final_web_data_pt_1.txt'
-  pt_2: 'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\resources\df_final_web_data_pt_2.txt'
+  pt_1: 'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\vanguard\resources\df_final_web_data_pt_1.txt'
+  pt_2: 'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\vanguard\resources\df_final_web_data_pt_2.txt'
   orders: ' .csv'
   orders_prior: ' .csv'
   instacart_sample: ' .csv'
