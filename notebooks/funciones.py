@@ -1,5 +1,8 @@
 def leer_datos(yalm_path):
 
+    import pandas as pd
+    import yaml
+
     #leemos el archivo Yaml en Python
     try:
         with open(yalm_path, 'r') as file:
@@ -20,3 +23,5 @@ def leer_datos(yalm_path):
     except Exception as e:
         print('Error importando la data', e)
         return None
+
+ 
