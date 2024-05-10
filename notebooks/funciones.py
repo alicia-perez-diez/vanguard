@@ -24,4 +24,36 @@ def leer_datos(yalm_path):
         print('Error importando la data', e)
         return None
 
- 
+def limpiar_dataframes(df_final_demo, df_final_web_data, df_exp):
+
+    import pandas as pd
+
+    #eliminamos la columna clnt_tenure_mnth
+    df_final_demo.drop("clnt_tenure_mnth", axis = 1, inplace = True)
+
+    #Cambiamos el nombre de las columnas para que sean más descriptivos
+    df_final_demo.columns = ["client_id","permanence_year","age","gender","num_accounts","total_balance","calls_months","login_month"]
+
+    #eliminamos los valores duplicados de df_final_web_data
+    df_final_web_data.drop_duplicates(keep='first', inplace=True)
+
+    #cambiamos el formato de la columna 'date_time' a datetime.
+    df_final_web_data["date_time"] = pd.to_datetime(df_final_web_data["date_time"], format='%Y-%m-%d %H:%M:%S')
+
+    #cambiamos el nombre de la columna Variation a variation
+    df_exp = df_exp.rename(columns={'Variation': 'variation'}, inplace=True)
+
+    return df_final_demo, df_final_web_data, df_exp
+
+def crear_dataframe_principales_clientes(df_final_demo):
+
+    import pandas as pd
+
+    #calcular los principales clientes basados en el dinero total de sus cuentas
+    clientes_principales = df_final_demo.groupby('client_id')['total_balance'].sum().nlargest(50)
+
+    #filtramos el dataframe original solo para los clientes principales
+    df_clientes_principales = df_final_demo[df_final_demo['client_id'].isin(clientes_principales.index)]
+
+    return df_clientes_principales
+
