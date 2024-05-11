@@ -94,3 +94,20 @@ def grafico_genero_clientes_principales(df_clientes_principales):
     plt.title('Distribución de Género entre los Principales Clientes')
     plt.show()
     
+def grafico_fidelidad_clientes_principales(df_clientes_principales):
+
+    #agrupamos los años que llevan los clientes siéndolo hasta 5 clientes nuevos, hasta 15 clientes consolidados y a partir de ahí clientes antiguos
+    bins = [0, 5, 15, df_clientes_principales['age'].max()]
+    labels = ['Clientes nuevos', 'Clientes consolidados', 'Clientes antiguos']
+
+    #añadimos una columna al dataframe df_clientes_principales llamada permanence_year_grouped para guardar esta nueva agrupación
+    df_clientes_principales['permanence_year_grouped'] = pd.cut(df_clientes_principales['permanence_year'], bins=bins, labels=labels, include_lowest=True)
+
+    #creamos un gráfico de barras para visualizar la distribución
+    plt.figure(figsize=(10, 6))
+    sns.countplot(x='permanence_year_grouped', data=df_clientes_principales, palette='pastel')
+    plt.title('Distribución de la fidelidad de los clientes principales')
+    plt.xlabel('Tiempo de permanencia')
+    plt.ylabel('Número de años')
+    plt.show()
+
