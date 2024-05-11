@@ -78,6 +78,8 @@ def grafico_edad_clientes_principales(df_clientes_principales):
     plt.ylabel('Número de clientes')
     plt.show()
 
+    print('jóvenes hasta 36, adultos jóvenes hasta 54 y adultos mayores a partir de 54')
+
 def grafico_genero_clientes_principales(df_clientes_principales):
     
     import pandas as pd
@@ -93,6 +95,9 @@ def grafico_genero_clientes_principales(df_clientes_principales):
     plt.pie(frecuencia_genero, labels=frecuencia_genero.index, autopct='%1.1f%%', colors=sns.color_palette('Set3'))
     plt.title('Distribución de Género entre los Principales Clientes')
     plt.show()
+
+    print('M = Masculino, F = Femenino, U = NS/NC')
+
     
 def grafico_fidelidad_clientes_principales(df_clientes_principales):
 
@@ -113,5 +118,34 @@ def grafico_fidelidad_clientes_principales(df_clientes_principales):
     plt.title('Distribución de la fidelidad de los clientes principales')
     plt.xlabel('Tiempo de permanencia')
     plt.ylabel('Número de años')
+    plt.show()
+
+    print('0-5 = clientes nuevos, 5-15 = clientes consolidados, >15 = clientes antiguos')
+
+def graficos_contacto_clientes_ultimos_meses(df_clientes_principales):
+    
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
+    # Crear una figura con dos subplots
+    fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(16, 5))
+
+    # Gráfico de barras de interacciones en la web en los últimos 6 meses de los principales clientes
+    sns.countplot(x='login_month', data=df_clientes_principales, palette='coolwarm', ax=axes[0])
+    axes[0].set_title('Interacciones en la plataforma de los clientes principales en los últimos 6 meses')
+    axes[0].set_xlabel('Num de accesos a la plataforma')
+    axes[0].set_ylabel('Num de usuarios')
+
+    # Gráfico de barras de clientes que hablaron en los últimos 6 meses de los principales clientes
+    sns.countplot(x='calls_months', data=df_clientes_principales, palette='pastel', ax=axes[1])
+    axes[1].set_title('Llamadas de los Principales Clientes en los últimos 6 meses')
+    axes[1].set_xlabel('Num de llamadas')
+    axes[1].set_ylabel('Num de usuarios')
+
+    # Ajustar el espaciado entre los subplots
+    plt.tight_layout()
+
+    # Mostrar el gráfico combinado
     plt.show()
 
