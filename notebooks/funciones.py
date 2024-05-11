@@ -57,3 +57,29 @@ def crear_dataframe_principales_clientes(df_final_demo):
 
     return df_clientes_principales
 
+def grafico_edad_clientes_principales(df_clientes_principales):
+
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
+    
+    #agrupamos las edades por grupos de edad: jóvenes hasta 36, adultos jóvenes hasta 54 y adultos mayores a partir de 54.
+    bins = [18, 36, 54, df_clientes_principales['age'].max()]
+    labels = ['jóvenes', 'adultos jóvenes', 'adultos mayores']
+
+    #añadimos la columna 'age_grouped' con las edades agrupadas al dataframe de clientes principales
+    df_clientes_principales['age_grouped'] = pd.cut(df_clientes_principales['age'], bins=bins, labels=labels, include_lowest=True)
+
+    #Histograma de edades de los principales clientes
+
+    plt.figure(figsize=(10, 6))
+    sns.histplot(df_clientes_principales['age_grouped'], bins=20, kde=True, color='skyblue')
+    plt.title('Distribución de Edades de los Principales Clientes')
+    plt.xlabel('Grupo de edad')
+    plt.ylabel('Número de clientes')
+    plt.show()
+
+    print('jóvenes=hasta 36 años, adultos jóvenes=hasta 54 años, adultos mayores=a partir de 54 años')
+
+    
