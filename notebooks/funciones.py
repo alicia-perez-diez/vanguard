@@ -96,6 +96,10 @@ def grafico_genero_clientes_principales(df_clientes_principales):
     
 def grafico_fidelidad_clientes_principales(df_clientes_principales):
 
+    import pandas as pd
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+
     #agrupamos los años que llevan los clientes siéndolo hasta 5 clientes nuevos, hasta 15 clientes consolidados y a partir de ahí clientes antiguos
     bins = [0, 5, 15, df_clientes_principales['age'].max()]
     labels = ['Clientes nuevos', 'Clientes consolidados', 'Clientes antiguos']
