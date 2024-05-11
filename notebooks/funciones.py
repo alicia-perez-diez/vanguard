@@ -62,7 +62,6 @@ def grafico_edad_clientes_principales(df_clientes_principales):
     import pandas as pd
     import matplotlib.pyplot as plt
     import seaborn as sns
-
     
     #agrupamos las edades por grupos de edad: jóvenes hasta 36, adultos jóvenes hasta 54 y adultos mayores a partir de 54.
     bins = [18, 36, 54, df_clientes_principales['age'].max()]
@@ -72,7 +71,6 @@ def grafico_edad_clientes_principales(df_clientes_principales):
     df_clientes_principales['age_grouped'] = pd.cut(df_clientes_principales['age'], bins=bins, labels=labels, include_lowest=True)
 
     #Histograma de edades de los principales clientes
-
     plt.figure(figsize=(10, 6))
     sns.histplot(df_clientes_principales['age_grouped'], bins=20, kde=True, color='skyblue')
     plt.title('Distribución de Edades de los Principales Clientes')
@@ -80,6 +78,19 @@ def grafico_edad_clientes_principales(df_clientes_principales):
     plt.ylabel('Número de clientes')
     plt.show()
 
-    print('jóvenes=hasta 36 años, adultos jóvenes=hasta 54 años, adultos mayores=a partir de 54 años')
+def grafico_genero_clientes_principales(df_clientes_principales):
+    
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import seaborn as sns
 
+    #calculamos la frecuencia de género entre los clientes principales
+    frecuencia_genero = df_clientes_principales['gender'].value_counts()
+
+    #creamos gráfico circular para mostrar la proporción de géneros entre los principales clientes
+    plt.figure(figsize=(10, 6))
+    plt.subplot(1, 2, 1)  # 1 fila, 2 columnas, primer subgráfico
+    plt.pie(frecuencia_genero, labels=frecuencia_genero.index, autopct='%1.1f%%', colors=sns.color_palette('Set3'))
+    plt.title('Distribución de Género entre los Principales Clientes')
+    plt.show()
     
