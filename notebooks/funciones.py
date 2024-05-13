@@ -529,3 +529,70 @@ def grafico_tasa_abandono_test_control(df_exp, df_final_web_data):
     plt.xticks(rotation=0)
     plt.tight_layout()
     plt.show()
+
+def tiempo_permanencia_test_control(df_exp, df_final_web_data):
+
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    
+    #agrupamos el df_final_web_data con df_exp para añadir si el cliente ha visto la plataforma original o el test
+    df_transacciones = df_final_web_data.merge(df_exp, how='left', left_on='client_id', right_on='client_id').dropna(subset='variation')
+
+    #agrupamos el dataframe por variación y tiempo entrada y de salida de cada usuario por id de visita
+    df_tiempo_de_permanencia = df_transacciones.groupby(by=['variation', 'visit_id'])['date_time'].agg(['max', 'min']).reset_index()
+
+    #agregamos una columna con el tiempo total por sesión de cada id de visita
+    df_tiempo_de_permanencia['difference_time'] = df_tiempo_de_permanencia['max'] - df_tiempo_de_permanencia['min']
+
+    #transformamos el tiempo a segundos
+    df_tiempo_de_permanencia['difference_time_in_seconds'] = df_tiempo_de_permanencia['difference_time'].dt.total_seconds()
+
+    #calculamos la media de tiempo de permanencia total por cada variación
+    df_tiempo_de_permanencia_total = df_tiempo_de_permanencia.groupby('variation')['difference_time_in_seconds'].agg('mean')
+
+    #graficamos el tiempo medio de permanencia en el sitio web por variación
+    #ajustamos el tamaño
+    df_tiempo_de_permanencia_total.plot(kind='bar', figsize=(8, 6))
+    
+    #creamos el gráfico
+    sns.barplot(x=df_tiempo_de_permanencia_total.index, y=df_tiempo_de_permanencia_total.values, palette='pastel')
+    
+    #otorgamos el título y las etiquetas
+    plt.title('Tiempo Medio de Permanencia en la plataforma')
+    plt.xlabel('Variation')
+    plt.ylabel('Tiempo Medio de Permanencia (segundos)')
+
+    #ajustamos configuración y mostramos el gráfico
+    plt.xticks(rotation=0)
+    plt.tight_layout()
+    plt.show()
+
+def tiempo_permanencia_menor_10_secs(df_exp, df_final_web_data):
+
+    #agrupamos el df_final_web_data con df_exp para añadir si el cliente ha visto la plataforma original o el test
+    df_transacciones = df_final_web_data.merge(df_exp, how='left', left_on='client_id', right_on='client_id').dropna(subset='variation')
+
+    #agrupamos el dataframe por variación y tiempo entrada y de salida de cada usuario por id de visita
+    df_tiempo_de_permanencia = df_transacciones.groupby(by=['variation', 'visit_id'])['date_time'].agg(['max', 'min']).reset_index()
+
+    #calculamos cuántos usuarios han estado menos de 10 segundos en la página
+    tiempo_permanencia_menor_10_secs = (df_tiempo_de_permanencia['difference_time_in_seconds'] <= 10).groupby(df_tiempo_de_permanencia['variation']).sum()
+
+    #creamos el gráfico
+    #ajustamos el tamaño
+    plt.figure(figsize=(10, 6))
+    tiempo_permanencia_menor_10_secs.plot(kind='bar')
+    
+    #creamos el gráfico
+    sns.barplot(x=tiempo_permanencia_menor_10_secs.index, y=tiempo_permanencia_menor_10_secs.values, palette='Spectral')
+    
+    #otorgamos título, etiquetas y configuramos
+    plt.title('Tiempo de Permanencia <= 10 Segundos')
+    plt.xlabel('Variación')
+    plt.ylabel('Número de Usuarios')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+
+    #mostramos el gráfico
+    plt.show()
