@@ -1,6 +1,6 @@
 #importamos las librerías
 import pandas as pd
-from funciones import leer_datos, limpiar_dataframes, crear_dataframe_principales_clientes, grafico_edad_clientes_principales, grafico_genero_clientes_principales, grafico_fidelidad_clientes_principales, graficos_contacto_clientes_ultimos_meses, grafico_num_cuentas_clientes_principales, mapa_calor_valores_numericos, grafico_dinero_y_num_cuentas, grafico_dinero_segun_edad, grafico_edad_genero_y_num_cuentas, grafico_edad_genero_y_dinero, grafico_proporcion_test_control, grafico_drop_off_test_control, grafico_tiempo_promedio_entre_pasos_test_control, tasa_de_conversion_por_paso_test_control, grafico_tasa_conversion_test_control
+from funciones import leer_datos, limpiar_dataframes, crear_dataframe_principales_clientes, grafico_edad_clientes_principales, grafico_genero_clientes_principales, grafico_fidelidad_clientes_principales, graficos_contacto_clientes_ultimos_meses, grafico_num_cuentas_clientes_principales, mapa_calor_valores_numericos, grafico_dinero_y_num_cuentas, grafico_dinero_segun_edad, grafico_edad_genero_y_num_cuentas, grafico_edad_genero_y_dinero, grafico_proporcion_test_control, grafico_drop_off_test_control, grafico_tiempo_promedio_entre_pasos_test_control, tasa_de_conversion_por_paso_test_control, grafico_tasa_conversion_test_control,grafico_tasa_abandono_test_control
 
 #llamamos al archivo desde el archivo yalm e importamos los dataframes
 yalm_path = "../config.yaml"
@@ -20,7 +20,6 @@ grafico_edad_clientes_principales(df_clientes_principales)
 grafico_genero_clientes_principales(df_clientes_principales)
 
 #mostramos el gráfico de barras con la cantidad de años que llevan los clientes principales siéndolo
-#hasta 5 años = clientes nuevos, hasta 15 años clientes consolidados, a partir de 15 años clientes antiguos
 grafico_fidelidad_clientes_principales(df_clientes_principales)
 
 #mostramos dos gráficos de barras que muestran el número de contactos que han tenido los contactos principales en los últimos 6 meses
@@ -62,3 +61,5 @@ tasa_de_conversion_por_paso_test_control(df_exp, df_final_web_data)
 #mostramos el gráfico de barras para visualizar la tasa de conversión por variación: control y test
 grafico_tasa_conversion_test_control(df_exp, df_final_web_data)
 
+#mostramos el gráfico de barras para comparar la tasa de abandono por variación: contro y test
+grafico_tasa_abandono_test_control(df_exp, df_final_web_data)

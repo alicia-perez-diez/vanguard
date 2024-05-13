@@ -495,3 +495,37 @@ def grafico_tasa_conversion_test_control(df_exp, df_final_web_data):
     #mostramos el gráfico
     plt.tight_layout()
     plt.show()
+
+def grafico_tasa_abandono_test_control(df_exp, df_final_web_data):
+
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
+    df_merged_para_tasa_de_abandono = pd.merge(df_final_web_data, df_exp, on='client_id')
+
+    #calculamos el número de usuarios que comenzaron el proceso para cada variación
+    variacion_total = df_merged_para_tasa_de_abandono.groupby('variation')['client_id'].nunique()
+
+    #calculamos el número de usuarios que completaron el proceso para cada variación
+    proceso_completado = df_merged_para_tasa_de_abandono[df_merged_para_tasa_de_abandono['process_step'] == 'confirm'].groupby('variation')['client_id'].nunique()
+
+    #calculamos la tasa de abandono total para cada variación
+    ratio_de_abandono = 1 - (proceso_completado / variacion_total)
+
+    #graficamos la tasa de abandono total por variación
+    #ajustamos el tamaño
+    plt.figure(figsize=(8, 6))
+
+    #creamos el gráfico
+    sns.barplot(x=ratio_de_abandono.index, y=ratio_de_abandono.values, palette='PiYG')
+    
+    #otorgamos título y etiquetas
+    plt.title('Tasa de Abandono Total por Variación')
+    plt.xlabel('Variation')
+    plt.ylabel('Tasa de Abandono')
+    
+    #ajustamos configuración y mostramos el gráfico
+    plt.xticks(rotation=0)
+    plt.tight_layout()
+    plt.show()
