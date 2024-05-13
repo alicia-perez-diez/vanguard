@@ -128,24 +128,228 @@ def graficos_contacto_clientes_ultimos_meses(df_clientes_principales):
     import matplotlib.pyplot as plt
     import seaborn as sns
 
-    # Crear una figura con dos subplots
+    #crear una figura con dos subplots
     fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(16, 5))
 
-    # Gráfico de barras de interacciones en la web en los últimos 6 meses de los principales clientes
+    #gráfico de barras de interacciones en la web en los últimos 6 meses de los principales clientes
     sns.countplot(x='login_month', data=df_clientes_principales, palette='coolwarm', ax=axes[0])
     axes[0].set_title('Interacciones en la plataforma de los clientes principales en los últimos 6 meses')
     axes[0].set_xlabel('Num de accesos a la plataforma')
     axes[0].set_ylabel('Num de usuarios')
 
-    # Gráfico de barras de clientes que hablaron en los últimos 6 meses de los principales clientes
+    #gráfico de barras de clientes que hablaron en los últimos 6 meses de los principales clientes
     sns.countplot(x='calls_months', data=df_clientes_principales, palette='pastel', ax=axes[1])
     axes[1].set_title('Llamadas de los Principales Clientes en los últimos 6 meses')
     axes[1].set_xlabel('Num de llamadas')
     axes[1].set_ylabel('Num de usuarios')
 
-    # Ajustar el espaciado entre los subplots
+    #ajustamos el espaciado entre los subplots
     plt.tight_layout()
 
-    # Mostrar el gráfico combinado
+    #mostramos el gráfico combinado
+    plt.show()
+
+def grafico_num_cuentas_clientes_principales(df_clientes_principales):
+    
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
+    #ajustamos el tamaño
+    plt.figure(figsize=(10, 8))
+
+    #creamos el gráfico de violín
+    sns.violinplot(x=df_clientes_principales['num_accounts'], inner='quartile', palette='pastel')
+    
+    #definimos título y etiquetas
+    plt.title('Distribución del Número de Cuentas de los Principales Clientes')
+    plt.xlabel('Número de Cuentas')
+    plt.ylabel('Densidad')
+
+    #mostramos el gráfico
+    plt.show()
+
+def mapa_calor_valores_numericos(df_clientes_principales):
+
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
+    #calculamos la matriz de correlación para crear un mapa de calor que muestre la relación entre variables numéricas
+    matriz_de_correlacion = df_clientes_principales[['total_balance', 'age', 'num_accounts']].corr()
+
+    #ajustamos el tamaño
+    plt.figure(figsize=(8, 6))
+
+    #creamos el mapa de calor
+    sns.heatmap(matriz_de_correlacion, annot=True, cmap='coolwarm', fmt=".2f")
+
+    #otorgamos un título
+    plt.title('Matriz de Correlación')
+
+    #mostramos el gráfico
+    plt.show()
+
+def grafico_dinero_y_num_cuentas(df_clientes_principales):
+
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
+    #ajustamos el tamaño del gráfico
+    plt.figure(figsize=(10, 8))
+
+    #creamos el gráfico de cajas
+    sns.boxplot(x=df_clientes_principales['num_accounts'], y=df_clientes_principales['total_balance'], palette='coolwarm')
+    
+    #otorgamos título y etiquetas
+    plt.title('Dinero en Cuenta de los Principales Clientes por Número de Cuentas')
+    plt.xlabel('Número de Cuentas')
+    plt.ylabel('Dinero en Cuenta')
+
+    #mostramos el gráfico
+    plt.show()
+
+def grafico_dinero_segun_edad(df_clientes_principales):
+    
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
+    #agrupamos las edades por grupos de edad: jóvenes hasta 36, adultos jóvenes hasta 54 y adultos mayores a partir de 54.
+    bins = [18, 36, 54, df_clientes_principales['age'].max()]
+    labels = ['jóvenes', 'adultos jóvenes', 'adultos mayores']
+
+    #añadimos la columna 'age_grouped' con las edades agrupadas al dataframe de clientes principales
+    df_clientes_principales['age_grouped'] = pd.cut(df_clientes_principales['age'], bins=bins, labels=labels, include_lowest=True)
+
+    #ajustamos el tamaño del gráfico
+    plt.figure(figsize=(10, 6))
+
+    #creamos el gráfico de barras
+    sns.barplot(x='age_grouped', y='num_accounts', data=df_clientes_principales, palette='pastel', errorbar=None)
+    
+    #otorgamos título y etiquetas
+    plt.title('Distribución del dinero en cuenta por edad')
+    plt.xlabel('Grupo de edad')
+    plt.ylabel('Dinero en cuenta (media)')
+    
+    #mostramos el gráfico
+    plt.show()
+
+    print('jóvenes hasta 36, adultos jóvenes hasta 54 y adultos mayores a partir de 54')
+
+def grafico_edad_genero_y_num_cuentas(df_clientes_principales):
+    
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    
+    #ajustamos el tamaño del gráfico
+    plt.figure(figsize=(10, 6))
+    
+    #creamos el gráfico
+    sns.scatterplot(x='age', y='num_accounts', data=df_clientes_principales, hue='gender', palette='Set2')
+    
+    #asignamos título, etiquetas y leyenda
+    plt.title('Relación entre Edad y Número de Cuentas Abiertas')
+    plt.xlabel('Edad')
+    plt.ylabel('Número de Cuentas Abiertas')
+    plt.legend(title='Género', loc='upper left')
+
+    #mostramos el gráfico
+    plt.show()
+
+def grafico_edad_genero_y_dinero(df_clientes_principales):
+    
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
+    #ajustamos el tamaño
+    plt.figure(figsize=(10, 6))
+
+    #creamos el gráfico
+    sns.scatterplot(x='age', y='total_balance', data=df_clientes_principales, hue='gender', palette='Set2')
+    
+    #asignamos título, etiquetas y legenda
+    plt.title('Relación entre Edad, Género y Dinero en cuenta')
+    plt.xlabel('Edad')
+    plt.ylabel('Dinero en cuenta')
+    plt.legend(title='Género', loc='upper left')
+
+    #mostramos el gráfico
+    plt.show()
+
+def grafico_proporcion_test_control(df_exp):
+
+    import pandas as pd
+    import matplotlib.pyplot as plt
+
+    #contamos el número de usuarios que han visto la página de control y la de test
+    control_users = df_exp[df_exp['variation'] == 'Control']['client_id'].nunique()
+    test_users = df_exp[df_exp['variation'] == 'Test']['client_id'].nunique()
+
+    #creamos una lista con los nombres de las variantes y otra lista con los tamaños correspondientes
+    variantes = ['Control', 'Test']
+    tamaños = [control_users, test_users]
+
+    #creamos el gráfico circular
+    #ajustamos el tamaño
+    plt.figure(figsize=(8, 6))
+
+    #creamos el gráfico
+    patches, texts, _ = plt.pie(tamaños, labels=variantes, autopct='%1.1f%%', startangle=140, colors=['lightblue', 'lightgreen'])
+     
+    plt.title('Distribución de usuarios entre la página de control y la de test')
+    plt.axis('equal')
+
+    #añadimos el número exacto de usuarios
+    for i, texto in enumerate(texts):
+        texto.set_text(f"{variantes[i]}: {tamaños[i]} usuarios")
+
+    plt.show()
+
+def grafico_drop_off_test_control(df_exp, df_final_web_data):
+
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    import pandas as pd
+
+    # creamos el dataframe solo con los usuarios que han realizado el test
+    df_test = df_final_web_data.merge(df_exp[df_exp['variation'] == 'Test'], how='inner', on='client_id')
+
+    #creamos el dataframe solo con los usuarios que han realizado la versión original
+    df_control = df_final_web_data.merge(df_exp[df_exp['variation'] == 'Control'], how='inner', on='client_id')
+
+    #ordenamos los pasos para que se muestren en el orden natural
+    orden = ['start', 'step_1', 'step_2', 'step_3', 'confirm']
+
+    #convertimos la columna process_step del test a tipo categórico con el orden deseado
+    df_test['process_step'] = pd.Categorical(df_test['process_step'], categories=orden, ordered=True)
+
+    #convertimos la columna process_step del control a tipo categórico con el orden deseado
+    df_control['process_step'] = pd.Categorical(df_control['process_step'], categories=orden, ordered=True)
+
+    #creamos los histogramas ordenados
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5)) 
+
+    #graficamos el avance de los usuarios en la versión original de la plataforma
+    sns.histplot(df_control['process_step'], bins=20, kde=True, color='green', ax=axes[0])
+    axes[0].set_title('Drop off en la versión original de la plataforma', pad=30)  # Ajustamos la distancia entre el título y el gráfico
+    axes[0].set_xlabel('Pasos')
+    axes[0].set_ylabel('Número de usuarios')
+    axes[0].set_ylim(0, 120000)
+
+    #graficamos el avance de los usuarios que hicieron el test en la plataforma
+    sns.histplot(df_test['process_step'], bins=20, kde=True, color='skyblue', ax=axes[1])
+    axes[1].set_title('Drop off en la versión test de la plataforma', pad=30)  # Ajustamos la distancia entre el título y el gráfico
+    axes[1].set_xlabel('Pasos')
+    axes[1].set_ylabel('Número de usuarios')
+    axes[1].set_ylim(0, 120000)
+
+    plt.tight_layout()  # Ajustamos el diseño para evitar solapamientos
+
+    #mostramos los gráficos
     plt.show()
 
