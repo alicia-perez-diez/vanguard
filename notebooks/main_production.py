@@ -12,7 +12,7 @@ yalm_path = "../config.yaml"
 df_final_demo, df_final_web_data, df_exp = leer_datos(yalm_path) 
 
 #llamamos a la función limpiar_dataframes
-limpiar_dataframes(df_final_demo, df_final_web_data, df_exp)
+df_final_demo, df_final_web_data, df_exp = limpiar_dataframes(df_final_demo, df_final_web_data, df_exp)
 
 #filtramos el dataframe df_final_demo para obtener a los 50 clientes con más dinero en la cuenta
 df_clientes_principales = crear_dataframe_principales_clientes(df_final_demo)
@@ -60,7 +60,6 @@ grafico_tiempo_promedio_entre_pasos_test_control(df_exp, df_final_web_data)
 
 #mostramos el gráfico de barras para visualizar la tasa de conversión por paso para cada una de las variaciones: control y test
 grafico_tasa_de_conversion_por_paso_test_control(df_exp, df_final_web_data)
-#DA ERROR
 
 #mostramos el gráfico de barras para visualizar la tasa de conversión por variación: control y test
 grafico_tasa_conversion_test_control(df_exp, df_final_web_data)
@@ -73,5 +72,9 @@ grafico_tiempo_permanencia_test_control(df_exp, df_final_web_data)
 
 #mostramos el gráfico de barras para ver cuántos usuarios permanecieron menos de 10 segundos en la página por variación: control y test
 grafico_tiempo_permanencia_menor_10_secs(df_exp, df_final_web_data)
-#DA ERROR
 
+df_final_demo.to_csv(r'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\vanguard\data\output\df_final_demo.csv', sep=',', encoding='utf-8', index=False)
+
+df_exp.to_csv(r'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\vanguard\data\output\df_exp.csv', sep=',', encoding='utf-8', index=False)
+
+df_final_web_data.to_csv(r'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\vanguard\data\output\df_final_web_data.csv', sep=',', encoding='utf-8', index=False)

@@ -41,7 +41,7 @@ def limpiar_dataframes(df_final_demo, df_final_web_data, df_exp):
     df_final_web_data["date_time"] = pd.to_datetime(df_final_web_data["date_time"], format='%Y-%m-%d %H:%M:%S')
 
     #cambiamos el nombre de la columna Variation a variation
-    df_exp = df_exp.rename(columns={'Variation': 'variation'}, inplace=True)
+    df_exp = df_exp.rename(columns={'Variation': 'variation'})
 
     return df_final_demo, df_final_web_data, df_exp
 
@@ -413,8 +413,29 @@ def grafico_tasa_de_conversion_por_paso_test_control(df_exp, df_final_web_data):
     import matplotlib.pyplot as plt
     import seaborn as sns
 
+    #eliminamos los datos nulos y con ellos se eliminan 20109 filas
+    df_exp = df_exp.dropna(subset =["variation"])
+
     #agrupamos el df_final_web_data con df_exp para añadir si el cliente ha visto la plataforma original o el test
     df_transacciones = df_final_web_data.merge(df_exp, how='left', left_on='client_id', right_on='client_id').dropna(subset='variation')
+
+    #agrupamos el df_final_web_data con df_exp para añadir si el cliente ha visto la plataforma original o el test
+    df_transacciones = df_final_web_data.merge(df_exp, how='left', left_on='client_id', right_on='client_id').dropna(subset='variation')
+
+    #ordenamos los valores del df por cliente id, visita id y
+    df_transacciones = df_transacciones.sort_values(by=['client_id', 'visit_id', 'date_time'])
+
+    #creamos una nueva columna en la que añadimos la fecha en la que el usuario realizó el paso anterior
+    df_transacciones['time_last_step'] = df_transacciones.groupby(by=['client_id', 'visit_id'])['date_time'].shift(1)
+
+    #creamos una nueva columna para añadir el paso anterior al actual
+    df_transacciones['last_step'] = df_transacciones.groupby(by=['client_id', 'visit_id'])['process_step'].shift(1)
+
+    #restamos la fecha del paso anterior a la del actual para ver cuánto ha tardado en pasar de un paso a otro
+    df_transacciones['time_difference'] = df_transacciones['date_time'] - df_transacciones['time_last_step']
+
+    #agregamos una nueva columna en la que incluimos el nombre del paso anterior y el paso actual
+    df_transacciones['steps'] = df_transacciones['process_step'].astype(str) + '_' + df_transacciones['last_step'].astype(str)
 
     #indicamos el orden en el que queremos que se realice el loop
     orden = ["start", "step_1", "step_2", "step_3", "confirm"]
@@ -536,7 +557,7 @@ def grafico_tiempo_permanencia_test_control(df_exp, df_final_web_data):
     import matplotlib.pyplot as plt
     import seaborn as sns
     
-    #agrupamos el df_final_web_data con df_exp para añadir si el cliente ha visto la plataforma original o el test
+     #agrupamos el df_final_web_data con df_exp para añadir si el cliente ha visto la plataforma original o el test
     df_transacciones = df_final_web_data.merge(df_exp, how='left', left_on='client_id', right_on='client_id').dropna(subset='variation')
 
     #agrupamos el dataframe por variación y tiempo entrada y de salida de cada usuario por id de visita
@@ -570,11 +591,22 @@ def grafico_tiempo_permanencia_test_control(df_exp, df_final_web_data):
 
 def grafico_tiempo_permanencia_menor_10_secs(df_exp, df_final_web_data):
 
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    
+
     #agrupamos el df_final_web_data con df_exp para añadir si el cliente ha visto la plataforma original o el test
     df_transacciones = df_final_web_data.merge(df_exp, how='left', left_on='client_id', right_on='client_id').dropna(subset='variation')
 
     #agrupamos el dataframe por variación y tiempo entrada y de salida de cada usuario por id de visita
     df_tiempo_de_permanencia = df_transacciones.groupby(by=['variation', 'visit_id'])['date_time'].agg(['max', 'min']).reset_index()
+
+    #agregamos una columna con el tiempo total por sesión de cada id de visita
+    df_tiempo_de_permanencia['difference_time'] = df_tiempo_de_permanencia['max'] - df_tiempo_de_permanencia['min']
+
+    #transformamos el tiempo a segundos
+    df_tiempo_de_permanencia['difference_time_in_seconds'] = df_tiempo_de_permanencia['difference_time'].dt.total_seconds()
 
     #calculamos cuántos usuarios han estado menos de 10 segundos en la página
     tiempo_permanencia_menor_10_secs = (df_tiempo_de_permanencia['difference_time_in_seconds'] <= 10).groupby(df_tiempo_de_permanencia['variation']).sum()
