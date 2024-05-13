@@ -407,7 +407,7 @@ def grafico_tiempo_promedio_entre_pasos_test_control(df_exp, df_final_web_data):
     #mostramos el gráfico
     fig.show()
 
-def tasa_de_conversion_por_paso_test_control(df_exp, df_final_web_data):
+def grafico_tasa_de_conversion_por_paso_test_control(df_exp, df_final_web_data):
 
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -530,7 +530,7 @@ def grafico_tasa_abandono_test_control(df_exp, df_final_web_data):
     plt.tight_layout()
     plt.show()
 
-def tiempo_permanencia_test_control(df_exp, df_final_web_data):
+def grafico_tiempo_permanencia_test_control(df_exp, df_final_web_data):
 
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -568,7 +568,7 @@ def tiempo_permanencia_test_control(df_exp, df_final_web_data):
     plt.tight_layout()
     plt.show()
 
-def tiempo_permanencia_menor_10_secs(df_exp, df_final_web_data):
+def grafico_tiempo_permanencia_menor_10_secs(df_exp, df_final_web_data):
 
     #agrupamos el df_final_web_data con df_exp para añadir si el cliente ha visto la plataforma original o el test
     df_transacciones = df_final_web_data.merge(df_exp, how='left', left_on='client_id', right_on='client_id').dropna(subset='variation')
@@ -596,3 +596,4 @@ def tiempo_permanencia_menor_10_secs(df_exp, df_final_web_data):
 
     #mostramos el gráfico
     plt.show()
+
