@@ -57,6 +57,39 @@ def crear_dataframe_principales_clientes(df_final_demo):
 
     return df_clientes_principales
 
+def crear_dataframe_promedio_tiempo_por_paso(df_exp, df_final_web_data):
+    #eliminamos los datos nulos y con ellos se eliminan 20109 filas
+    df_exp = df_exp.dropna(subset =["variation"])
+
+    #agrupamos el df_final_web_data con df_exp para añadir si el cliente ha visto la plataforma original o el test
+    df_transacciones = df_final_web_data.merge(df_exp, how='left', left_on='client_id', right_on='client_id').dropna(subset='variation')
+
+    #agrupamos el df_final_web_data con df_exp para añadir si el cliente ha visto la plataforma original o el test
+    df_transacciones = df_final_web_data.merge(df_exp, how='left', left_on='client_id', right_on='client_id').dropna(subset='variation')
+
+    #ordenamos los valores del df por cliente id, visita id y
+    df_transacciones = df_transacciones.sort_values(by=['client_id', 'visit_id', 'date_time'])
+
+    #creamos una nueva columna en la que añadimos la fecha en la que el usuario realizó el paso anterior
+    df_transacciones['time_last_step'] = df_transacciones.groupby(by=['client_id', 'visit_id'])['date_time'].shift(1)
+
+    #creamos una nueva columna para añadir el paso anterior al actual
+    df_transacciones['last_step'] = df_transacciones.groupby(by=['client_id', 'visit_id'])['process_step'].shift(1)
+
+    #restamos la fecha del paso anterior a la del actual para ver cuánto ha tardado en pasar de un paso a otro
+    df_transacciones['time_difference'] = df_transacciones['date_time'] - df_transacciones['time_last_step']
+
+    #agregamos una nueva columna en la que incluimos el nombre del paso anterior y el paso actual
+    df_transacciones['steps'] = df_transacciones['process_step'].astype(str) + '_' + df_transacciones['last_step'].astype(str)
+
+    #transformamos el tiempo a segundos
+    df_transacciones['difference_time_in_seconds'] = df_transacciones['time_difference'].dt.total_seconds()
+
+    #eliminamos las filas que tienen valores nulos en time_difference, ya que son el primer paso realizado por el usuario en cada visita
+    df_transacciones_para_grafico = df_transacciones.dropna(subset='difference_time_in_seconds')
+   
+    return df_transacciones_para_grafico
+
 def grafico_edad_clientes_principales(df_clientes_principales):
 
     import pandas as pd

@@ -1,6 +1,6 @@
 #importamos las librerías
 import pandas as pd
-from funciones import leer_datos, limpiar_dataframes, crear_dataframe_principales_clientes, grafico_edad_clientes_principales, grafico_genero_clientes_principales,\
+from funciones import leer_datos, limpiar_dataframes, crear_dataframe_principales_clientes, crear_dataframe_promedio_tiempo_por_paso, grafico_edad_clientes_principales, grafico_genero_clientes_principales,\
     grafico_fidelidad_clientes_principales, graficos_contacto_clientes_ultimos_meses, grafico_num_cuentas_clientes_principales, mapa_calor_valores_numericos,\
     grafico_dinero_y_num_cuentas, grafico_dinero_segun_edad, grafico_edad_genero_y_num_cuentas, grafico_edad_genero_y_dinero, grafico_proporcion_test_control,\
     grafico_drop_off_test_control, grafico_tiempo_promedio_entre_pasos_test_control, grafico_tasa_de_conversion_por_paso_test_control, grafico_tasa_conversion_test_control,\
@@ -16,6 +16,9 @@ df_final_demo, df_final_web_data, df_exp = limpiar_dataframes(df_final_demo, df_
 
 #filtramos el dataframe df_final_demo para obtener a los 50 clientes con más dinero en la cuenta
 df_clientes_principales = crear_dataframe_principales_clientes(df_final_demo)
+
+#creamos un dataframe para calcular el tiempo promedio que tardan los usuarios en pasar de un paso a otro por variación: control y test
+df_transacciones_para_grafico = crear_dataframe_promedio_tiempo_por_paso(df_exp, df_final_web_data)
 
 #mostramos el histograma con la edad de los clientes principales
 grafico_edad_clientes_principales(df_clientes_principales)
@@ -78,3 +81,5 @@ df_final_demo.to_csv(r'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vangu
 df_exp.to_csv(r'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\vanguard\data\output\df_exp.csv', sep=',', encoding='utf-8', index=False)
 
 df_final_web_data.to_csv(r'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\vanguard\data\output\df_final_web_data.csv', sep=',', encoding='utf-8', index=False)
+
+df_transacciones_para_grafico.to_csv(r'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\vanguard\data\output\df_transacciones_para_grafico.csv', sep=',', encoding='utf-8', index=False, float_format='%.2f')
