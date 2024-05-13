@@ -353,3 +353,145 @@ def grafico_drop_off_test_control(df_exp, df_final_web_data):
     #mostramos los gráficos
     plt.show()
 
+def grafico_tiempo_promedio_entre_pasos_test_control(df_exp, df_final_web_data):
+
+    import pandas as pd
+    import plotly.express as px
+
+    #eliminamos los datos nulos y con ellos se eliminan 20109 filas
+    df_exp = df_exp.dropna(subset =["variation"])
+
+    #agrupamos el df_final_web_data con df_exp para añadir si el cliente ha visto la plataforma original o el test
+    df_transacciones = df_final_web_data.merge(df_exp, how='left', left_on='client_id', right_on='client_id').dropna(subset='variation')
+
+    #agrupamos el df_final_web_data con df_exp para añadir si el cliente ha visto la plataforma original o el test
+    df_transacciones = df_final_web_data.merge(df_exp, how='left', left_on='client_id', right_on='client_id').dropna(subset='variation')
+
+    #ordenamos los valores del df por cliente id, visita id y
+    df_transacciones = df_transacciones.sort_values(by=['client_id', 'visit_id', 'date_time'])
+
+    #creamos una nueva columna en la que añadimos la fecha en la que el usuario realizó el paso anterior
+    df_transacciones['time_last_step'] = df_transacciones.groupby(by=['client_id', 'visit_id'])['date_time'].shift(1)
+
+    #creamos una nueva columna para añadir el paso anterior al actual
+    df_transacciones['last_step'] = df_transacciones.groupby(by=['client_id', 'visit_id'])['process_step'].shift(1)
+
+    #restamos la fecha del paso anterior a la del actual para ver cuánto ha tardado en pasar de un paso a otro
+    df_transacciones['time_difference'] = df_transacciones['date_time'] - df_transacciones['time_last_step']
+
+    #agregamos una nueva columna en la que incluimos el nombre del paso anterior y el paso actual
+    df_transacciones['steps'] = df_transacciones['process_step'].astype(str) + '_' + df_transacciones['last_step'].astype(str)
+
+    #eliminamos las filas que tienen valores nulos en time_difference, ya que son el primer paso realizado por el usuario en cada visita
+    df_transacciones_para_grafico = df_transacciones.dropna(subset='time_difference')
+
+    #creamos un nuevo df para el gráfico en el que agrupamos los pasos, la variación (si ha realizado el test o no) y el tiempo que han tardado los usuarios en ir de un paso a otro
+    df_transacciones_por_tiempo = df_transacciones_para_grafico.groupby(by=['steps', 'variation'])['time_difference'].mean().reset_index()
+
+    #realizamos un gráfico de barras agrupadas para comprobar de manera visual cuánto tiempo tardan los usuarios en ir de un paso a otro
+
+    #ordenamos los pasos según el orden natural
+    orden = ['start_start', 'start_step_1', 'start_step_2', 'start_step_3', 'start_confirm', 'step_1_start', 'step_1_step_1', 'step_1_step_2', 'step_1_step_3', 'step_1_confirm',\
+        'step_2_start', 'step_2_step_1', 'step_2_step_2', 'step_2_step_3', 'step_2_confirm', 'step_3_start', 'step_3_step_1', 'step_3_step_2', 'step_3_step_3', 'step_3_confirm',\
+        'confirm_start', 'confirm_step_1', 'confirm_step_2', 'confirm_step_3', 'confirm_confirm']
+
+    #creamos el gráfico
+    fig = px.bar(df_transacciones_por_tiempo, x="steps", y="time_difference", color="variation", barmode='group')
+
+    #lo ordenamos según el listado de orden creado previamente
+    fig.update_layout(xaxis=dict(categoryorder='array', categoryarray=orden))
+
+    #modificamos el título y etiquetas del gráfico
+    fig.update_layout(title="Tiempo promedio que tardan los usuarios en ir de un paso a otro según variación", xaxis_title='pasos', yaxis_title='tiempo promedio')
+
+    #mostramos el gráfico
+    fig.show()
+
+def tasa_de_conversion_por_paso_test_control(df_exp, df_final_web_data):
+
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
+    #agrupamos el df_final_web_data con df_exp para añadir si el cliente ha visto la plataforma original o el test
+    df_transacciones = df_final_web_data.merge(df_exp, how='left', left_on='client_id', right_on='client_id').dropna(subset='variation')
+
+    #indicamos el orden en el que queremos que se realice el loop
+    orden = ["start", "step_1", "step_2", "step_3", "confirm"]
+
+    #creamos una nueva variable para cada tipo de variación
+    variation = ['Test', 'Control']
+
+    #creamos un nuevo dataframe
+    df_stats = pd.DataFrame(columns=orden, index=variation)
+
+    #recorremos cada variación
+    for variation_i in variation:
+        #inicializamos el orden en 0
+        i=0
+        #recorremos cada paso
+        for step_i in orden[-4:]:
+            #para cada variación
+            df_temp = df_transacciones[df_transacciones['variation'] == variation_i]
+            #calculamos la tasa de conversión de cada paso, es decir, de usuarios que pasan al siguiente paso desde el inmediatamente previo
+            df_stats.loc[variation_i, orden[i]] = (df_temp[df_temp['steps'] == orden[i] + '_' + step_i]['visit_id'].count() / df_temp.groupby(by = 'process_step')['visit_id'].count()[orden[i]]) * 100
+            #terminamos el loop
+            i = i + 1
+    
+    #eliminamos la columna de confirm que tiene valores nulos
+    df_stats.dropna(axis=1, inplace=True)
+
+    #creamos el gráfico de la tasa de conversión para cada paso
+    #definimos una paleta de colores suave
+    sns.set_palette("pastel")
+
+    #creamos el gráfico
+    ax = df_stats.plot(kind='bar', stacked=True, figsize=(10, 6))
+    plt.title('Tasa de Conversión por Paso')
+    plt.xlabel('Paso del Proceso')
+    plt.ylabel('Tasa de Conversión')
+    plt.xticks(rotation=45)
+    plt.legend(title='variation')
+
+    #agregamos etiquetas de texto para mostrar las tasas de conversión exactas en cada barra
+    for p in ax.patches:
+        width = p.get_width()
+        height = p.get_height()
+        x, y = p.get_xy() 
+        ax.annotate(f'{height:.2f}', (x + width/2, y + height/2), ha='center', va='center')
+
+    plt.tight_layout()
+    
+    #mostramos el gráfico
+    plt.show()
+
+def grafico_tasa_conversion_test_control(df_exp, df_final_web_data):
+    
+    import pandas as pd
+    import matplotlib.pyplot as plt
+
+    #unimos los dataframes en uno solo utilizando la columna 'client_id' como clave
+    df_merged_para_tasa_de_conversion_total = pd.merge(df_final_web_data, df_exp, on='client_id')
+
+    #calculamos el número total de usuarios que completaron el proceso (llegaron al paso 'confirm')
+    confirm_total_por_variacion = df_merged_para_tasa_de_conversion_total[df_merged_para_tasa_de_conversion_total['process_step'] == 'confirm'].groupby('variation')['client_id'].nunique()
+
+    #calculamos el número total de usuarios que comenzaron el proceso (iniciaron el paso 'start')
+    start_total_por_variacion = df_merged_para_tasa_de_conversion_total[df_merged_para_tasa_de_conversion_total['process_step'] == 'start'].groupby('variation')['client_id'].nunique()
+
+    #calculamos la tasa de conversión total por variación
+    conversion_rate_total = confirm_total_por_variacion / start_total_por_variacion
+
+    #creamos el gráfico de barras
+    plt.figure(figsize=(10, 6))
+    conversion_rate_total.plot(kind='bar', color=['skyblue', 'pink'])
+
+    #configuramos el título y etiquetas
+    plt.title('Tasa de Conversión por Variación')
+    plt.xlabel('Variación')
+    plt.ylabel('Tasa de Conversión')
+    plt.xticks(rotation=45)
+
+    #mostramos el gráfico
+    plt.tight_layout()
+    plt.show()

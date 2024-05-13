@@ -1,6 +1,6 @@
 #importamos las librerías
 import pandas as pd
-from funciones import leer_datos, limpiar_dataframes, crear_dataframe_principales_clientes, grafico_edad_clientes_principales, grafico_genero_clientes_principales, grafico_fidelidad_clientes_principales, graficos_contacto_clientes_ultimos_meses, grafico_num_cuentas_clientes_principales, mapa_calor_valores_numericos, grafico_dinero_y_num_cuentas, grafico_dinero_segun_edad, grafico_edad_genero_y_num_cuentas, grafico_edad_genero_y_dinero, grafico_proporcion_test_control, grafico_drop_off_test_control
+from funciones import leer_datos, limpiar_dataframes, crear_dataframe_principales_clientes, grafico_edad_clientes_principales, grafico_genero_clientes_principales, grafico_fidelidad_clientes_principales, graficos_contacto_clientes_ultimos_meses, grafico_num_cuentas_clientes_principales, mapa_calor_valores_numericos, grafico_dinero_y_num_cuentas, grafico_dinero_segun_edad, grafico_edad_genero_y_num_cuentas, grafico_edad_genero_y_dinero, grafico_proporcion_test_control, grafico_drop_off_test_control, grafico_tiempo_promedio_entre_pasos_test_control, tasa_de_conversion_por_paso_test_control, grafico_tasa_conversion_test_control
 
 #llamamos al archivo desde el archivo yalm e importamos los dataframes
 yalm_path = "../config.yaml"
@@ -51,3 +51,14 @@ grafico_proporcion_test_control(df_exp)
 
 #mostramos los gráficos de barras que muestran el drop-off en cada paso para cada una de las variaciones: control y test
 grafico_drop_off_test_control(df_exp, df_final_web_data)
+
+#mostramos el gráfico de barras para visualizar el tiempo promedio que tardan los usuarios en ir de un paso a otro según la variación
+grafico_tiempo_promedio_entre_pasos_test_control(df_exp, df_final_web_data)
+
+#mostramos el gráfico de barras para visualizar la tasa de conversión por paso para cada una de las variaciones: control y test
+tasa_de_conversion_por_paso_test_control(df_exp, df_final_web_data)
+#DA ERROR
+
+#mostramos el gráfico de barras para visualizar la tasa de conversión por variación: control y test
+grafico_tasa_conversion_test_control(df_exp, df_final_web_data)
+
