@@ -4,8 +4,8 @@ from funciones import leer_datos, limpiar_dataframes, crear_dataframe_principale
     grafico_edad_clientes_principales, grafico_genero_clientes_principales, grafico_fidelidad_clientes_principales, graficos_contacto_clientes_ultimos_meses,\
     grafico_num_cuentas_clientes_principales, mapa_calor_valores_numericos, grafico_dinero_y_num_cuentas, grafico_dinero_segun_edad, grafico_edad_genero_y_num_cuentas,\
     grafico_edad_genero_y_dinero, grafico_proporcion_test_control, grafico_drop_off_test_control, grafico_tiempo_promedio_entre_pasos_test_control,\
-    grafico_tasa_de_conversion_por_paso_test_control, grafico_tasa_conversion_test_control,grafico_tasa_abandono_test_control, grafico_tiempo_permanencia_test_control,\
-    grafico_tiempo_permanencia_menor_10_secs
+    grafico_tasa_de_conversion_por_paso_test_control, grafico_tasa_conversion_test_control, test_hipotesis_tasa_conversion, grafico_tasa_abandono_test_control, grafico_tiempo_permanencia_test_control,\
+    test_hipotesis_tiempo_permanencia, grafico_tiempo_permanencia_menor_10_secs, normalizar_distribucion
 
 #llamamos al archivo desde el archivo yalm e importamos los dataframes
 yalm_path = "../config.yaml"
@@ -74,11 +74,28 @@ grafico_tasa_de_conversion_por_paso_test_control(df_exp, df_final_web_data)
 #mostramos el gráfico de barras para visualizar la tasa de conversión por variación: control y test
 grafico_tasa_conversion_test_control(df_exp, df_final_web_data)
 
+#realizamos el test de hipótesis sobre la diferencia de tiempo promedio entre cada una de las variaciones
+#hipótesis: la tasa de conversión del Test > que la tasa de conversión de Control
+#H₀: tasa conversión Test = tasa conversión Control
+#H¹: tasa conversión Test > tiempo conversión Control
+test_hipotesis_tasa_conversion(df_final_web_data, df_exp, alpha=0.05, alternative='greater')
+
 #mostramos el gráfico de barras para comparar la tasa de abandono por variación: contro y test
 grafico_tasa_abandono_test_control(df_exp, df_final_web_data)
 
 #mostramos el gráfico de barras para comparar el tiempo de permanencia por variación: control y test
 grafico_tiempo_permanencia_test_control(df_exp, df_final_web_data)
 
+#realizamos el test de hipótesis sobre la diferencia de tiempo promedio entre cada una de las variaciones
+#hipótesis: tiempo promedio de los usuarios del Test > que el tiempo promedio de los usuarios de Control
+#H₀: tiempo promedio Test = tiempo promedio Control
+#H¹: tiempo promedio Test > tiempo promedio Control
+test_hipotesis_tiempo_permanencia(df_final_web_data, df_exp, alpha=0.05, alternative='greater')
+
 #mostramos el gráfico de barras para ver cuántos usuarios permanecieron menos de 10 segundos en la página por variación: control y test
 grafico_tiempo_permanencia_menor_10_secs(df_exp, df_final_web_data)
+
+#normalizamos la distribución del tiempo de permanencia
+normalizar_distribucion(df, column_name)
+
+df_normalizado, lmbda = normalize_distribution(df_tiempo_de_permanencia_control, 'difference_time_in_seconds')
