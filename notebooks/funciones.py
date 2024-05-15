@@ -1,5 +1,7 @@
 def leer_datos(yalm_path):
 
+    """input, output y qué hace cada función"""
+
     import pandas as pd
     import yaml
 
@@ -42,6 +44,9 @@ def limpiar_dataframes(df_final_demo, df_final_web_data, df_exp):
 
     #cambiamos el nombre de la columna Variation a variation
     df_exp = df_exp.rename(columns={'Variation': 'variation'})
+
+    #eliminamos datos nulos
+    df_exp = df_exp.dropna()
 
     return df_final_demo, df_final_web_data, df_exp
 
@@ -89,6 +94,10 @@ def crear_dataframe_promedio_tiempo_por_paso(df_exp, df_final_web_data):
     df_transacciones_para_grafico = df_transacciones.dropna(subset='difference_time_in_seconds')
    
     return df_transacciones_para_grafico
+
+def crear_csv(df): #FALTA
+    df.to_csv(r'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\vanguard\data\output\df.csv', sep=',', encoding='utf-8', index=False)
+    return df
 
 def grafico_edad_clientes_principales(df_clientes_principales):
 
