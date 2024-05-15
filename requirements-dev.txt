@@ -1,5 +1,5 @@
 pandas = 2.2.1
-ipykernel = 6.28.0 #solo desarrollo
+ipykernel = 6.28.0
 pyyaml = 6.0.1
 seaborn = 0.12.2
 scipy = 1.13.0

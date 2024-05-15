@@ -3,10 +3,6 @@ data:
   pt_2: '..\resources\df_final_web_data_pt_2.txt'
   demo_final: '..\resources\df_final_demo.txt'
   exp_client: '..\resources\df_final_experiment_clients.txt'
-  orders: ' .csv'
-  orders_prior: ' .csv'
-  instacart_sample: ' .csv'
-  instacart_labels: ' .csv'
 
 scalers:
   minmax: '../scalers/minmaxscaler.pickle'
