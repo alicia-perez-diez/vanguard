@@ -1,10 +1,11 @@
 #importamos las librerías
 import pandas as pd
-from funciones import leer_datos, limpiar_dataframes, crear_dataframe_principales_clientes, crear_dataframe_promedio_tiempo_por_paso, grafico_edad_clientes_principales,\
-    grafico_genero_clientes_principales, grafico_fidelidad_clientes_principales, graficos_contacto_clientes_ultimos_meses, grafico_num_cuentas_clientes_principales,\
-    mapa_calor_valores_numericos, grafico_dinero_y_num_cuentas, grafico_dinero_segun_edad, grafico_edad_genero_y_num_cuentas, grafico_edad_genero_y_dinero,\
-    grafico_proporcion_test_control, grafico_drop_off_test_control, grafico_tiempo_promedio_entre_pasos_test_control, grafico_tasa_de_conversion_por_paso_test_control,\
-    grafico_tasa_conversion_test_control,grafico_tasa_abandono_test_control, grafico_tiempo_permanencia_test_control, grafico_tiempo_permanencia_menor_10_secs
+from funciones import leer_datos, limpiar_dataframes, crear_dataframe_principales_clientes, crear_dataframe_promedio_tiempo_por_paso, guardar_como_csv,\
+    grafico_edad_clientes_principales, grafico_genero_clientes_principales, grafico_fidelidad_clientes_principales, graficos_contacto_clientes_ultimos_meses,\
+    grafico_num_cuentas_clientes_principales, mapa_calor_valores_numericos, grafico_dinero_y_num_cuentas, grafico_dinero_segun_edad, grafico_edad_genero_y_num_cuentas,\
+    grafico_edad_genero_y_dinero, grafico_proporcion_test_control, grafico_drop_off_test_control, grafico_tiempo_promedio_entre_pasos_test_control,\
+    grafico_tasa_de_conversion_por_paso_test_control, grafico_tasa_conversion_test_control,grafico_tasa_abandono_test_control, grafico_tiempo_permanencia_test_control,\
+    grafico_tiempo_permanencia_menor_10_secs
 
 #llamamos al archivo desde el archivo yalm e importamos los dataframes
 yalm_path = "../config.yaml"
@@ -21,7 +22,10 @@ df_clientes_principales = crear_dataframe_principales_clientes(df_final_demo)
 df_transacciones_para_grafico = crear_dataframe_promedio_tiempo_por_paso(df_exp, df_final_web_data)
 
 #exportamos los dataframes a .csv para usarlos en plataformas de análisis visual
-crear_csv(df) #FALTA
+guardar_como_csv(df_final_demo, 'df_final_demo.csv')
+guardar_como_csv(df_exp, 'df_exp.csv')
+guardar_como_csv(df_final_web_data, 'df_final_web_data.csv')
+guardar_como_csv(df_transacciones_para_grafico, 'df_transacciones_para_grafico.csv')
 
 #mostramos el histograma con la edad de los clientes principales
 grafico_edad_clientes_principales(df_clientes_principales)
@@ -78,11 +82,3 @@ grafico_tiempo_permanencia_test_control(df_exp, df_final_web_data)
 
 #mostramos el gráfico de barras para ver cuántos usuarios permanecieron menos de 10 segundos en la página por variación: control y test
 grafico_tiempo_permanencia_menor_10_secs(df_exp, df_final_web_data)
-
-df_final_demo.to_csv(r'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\vanguard\data\output\df_final_demo.csv', sep=',', encoding='utf-8', index=False)
-
-df_exp.to_csv(r'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\vanguard\data\output\df_exp.csv', sep=',', encoding='utf-8', index=False)
-
-df_final_web_data.to_csv(r'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\vanguard\data\output\df_final_web_data.csv', sep=',', encoding='utf-8', index=False)
-
-df_transacciones_para_grafico.to_csv(r'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\vanguard\data\output\df_transacciones_para_grafico.csv', sep=',', encoding='utf-8', index=False, float_format='%.2f')

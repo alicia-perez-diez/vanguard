@@ -95,9 +95,22 @@ def crear_dataframe_promedio_tiempo_por_paso(df_exp, df_final_web_data):
    
     return df_transacciones_para_grafico
 
-def crear_csv(df): #FALTA
-    df.to_csv(r'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\vanguard\data\output\df.csv', sep=',', encoding='utf-8', index=False)
-    return df
+def guardar_como_csv(df, nombre_archivo):
+
+    """Esta función toma dos argumentos:
+        - df: el dataframe que queremos guardar como csv
+        - nombre_archivo que es nombre que queremos darle al archivo
+    y guarda el dataframe como archivo csv en la ubicación 'ruta'"""
+
+    import os
+
+    #creamos una cadena que representa la ruta de la carpeta donde queremos guardar el archivo CSV.
+    ruta = r'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\vanguard\data\output'
+
+    #utilizamos os.path.join() para unir esta ruta con el nombre del archivo proporcionado
+    #generando así la ruta completa donde guardaremos el archivo csv.
+    ruta_completa = os.path.join(ruta, nombre_archivo)
+    df.to_csv(ruta_completa, sep=',', encoding='utf-8', index=False)
 
 def grafico_edad_clientes_principales(df_clientes_principales):
 
