@@ -3,14 +3,3 @@ data:
   pt_2: '..\resources\df_final_web_data_pt_2.txt'
   demo_final: '..\resources\df_final_demo.txt'
   exp_client: '..\resources\df_final_experiment_clients.txt'
-
-scalers:
-  minmax: '../scalers/minmaxscaler.pickle'
-
-encoders:
-  ohe: ' ../encoders/ohe.pickle'
-
-models:
-  kmeans_randomstate: 1234
-  kmeans_path: 'models/kmeans_scaled_'
-  kmeans_path_k: '/models/kmeans_scaled_3.pickl'
