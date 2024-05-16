@@ -15,8 +15,8 @@ def main():
     grafico_tiempo_permanencia_menor_10_secs
 
     #llamamos al archivo desde el archivo yalm e importamos los dataframes
-    yalm_path = "./config.yaml"
-
+    yalm_path = 'config.yaml'
+    
     df_final_demo, df_final_web_data, df_exp = leer_datos(yalm_path) 
 
     #llamamos a la función limpiar_dataframes
