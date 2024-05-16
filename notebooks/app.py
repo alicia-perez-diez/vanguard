@@ -43,13 +43,7 @@ def main():
     #Multiselect box for selecting steps 
     steps = st.sidebar.multiselect('Select Options',df_transacciones_para_grafico.steps.unique())
     print(steps)
-    # Filtering
-    #filtered_data = df_transacciones_para_grafico[df_transacciones_para_grafico['steps'].isin(steps)]
-
-    #filtered_data = df_transacciones_para_grafico[df_transacciones_para_grafico['steps'].isin(steps)]
-    #if variation != 'All':
-        #filtered_data[filtered_data['variation'] == variation]
-        #filtered_data = filtered_data[filtered_data['variation'] == variation]
+    # Filters    
     filtered_data = df_transacciones_para_grafico
     if variation != 'All':
         filtered_data = filtered_data[filtered_data['variation'] == variation]
@@ -57,7 +51,7 @@ def main():
         filtered_data = filtered_data[filtered_data['steps'].isin(steps)]
 
     filtered_data_2 = df_final_demo if gender == 'All' else df_final_demo[df_final_demo['gender'] == gender]
-    #if gender != 'All':
+
     
     
     # Summary statistics
