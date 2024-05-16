@@ -113,6 +113,12 @@ def main():
     plt= grafico_drop_off_test_control(df_exp, df_final_web_data)
     st.pyplot(plt)
 
+    #Grafico tiempo promedio entre pasos
+    st.write("### tiempo promedio que tardan los usuarios en ir de un paso a otro según la variación")
+    plt= grafico_tiempo_promedio_entre_pasos_test_control(df_exp, df_final_web_data)
+    #st.pyplot(plt)
+    st.plotly_chart(plt, use_container_width=True)
+
     #Grafico de conversion
     st.write("### Tasa de Conversión por Paso")
     plt= grafico_tasa_de_conversion_por_paso_test_control(df_exp, df_final_web_data)
@@ -128,6 +134,7 @@ def main():
     plt= grafico_tiempo_permanencia_test_control(df_exp, df_final_web_data)
     st.pyplot(plt)
 
+    
     
 
 
