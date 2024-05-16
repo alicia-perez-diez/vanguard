@@ -105,7 +105,7 @@ def guardar_como_csv(df, nombre_archivo):
     import os
 
     #creamos una cadena que representa la ruta de la carpeta donde queremos guardar el archivo CSV.
-    ruta = r'C:\Users\perez\OneDrive\Documentos\GitHub\Proyectos\vanguard_project\vanguard\data\output'
+    ruta = r'..\data\output'
 
     #utilizamos os.path.join() para unir esta ruta con el nombre del archivo proporcionado
     #generando así la ruta completa donde guardaremos el archivo csv.
@@ -572,6 +572,70 @@ def grafico_tasa_conversion_test_control(df_exp, df_final_web_data):
     plt.tight_layout()
     plt.show()
 
+def test_hipotesis_tasa_conversion(df_final_web_data, df_exp, alpha=0.05, alternative='greater'):
+
+    """
+    Función para realizar un test de hipótesis sobre la tasa de conversión entre cada una de las variaciones.
+    
+    Args:
+        dataframes: df_final_web_data, df_exp.
+        alpha (float, optional): Nivel de significancia. Por defecto es 0.05.
+        alternative (str, optional): Dirección de la hipótesis alternativa. Puede ser 'greater' (mayor), 'less' (menor) o 'two-sided' (dos colas). Por defecto es 'greater'.
+        
+    Returns:
+        str: Resultado del test de hipótesis.
+    """
+
+    import pandas as pd
+    import scipy.stats as st
+    
+    #Unimos los dataframes en uno solo utilizando la columna 'client_id' como clave
+    df_merged_para_tasa_de_conversion_total = pd.merge(df_final_web_data, df_exp, on='client_id')
+
+    #calculamos el número total de usuarios que completaron el proceso (llegaron al paso 'confirm')
+    confirm_total_por_variacion = df_merged_para_tasa_de_conversion_total[df_merged_para_tasa_de_conversion_total['process_step'] == 'confirm'].groupby('variation')['client_id'].nunique()
+
+    #calculamos el número total de usuarios que comenzaron el proceso (iniciaron el paso 'start')
+    start_total_por_variacion = df_merged_para_tasa_de_conversion_total[df_merged_para_tasa_de_conversion_total['process_step'] == 'start'].groupby('variation')['client_id'].nunique()
+
+    #calculamos el ratio de conversion total por variación
+    conversion_rate_total = confirm_total_por_variacion / start_total_por_variacion
+
+    #filtramos entre los usuarios que han llegado al paso de confirm y creamos una columna que guarde el resultado
+    df_confirm_visit_id = df_merged_para_tasa_de_conversion_total[df_merged_para_tasa_de_conversion_total['process_step'] == 'confirm'].groupby('visit_id')['client_id'].nunique().reset_index().rename(columns={'client_id' : 'confirm_binary'})
+
+    #creamos otro dataframe con el visit_id y la variación realizada
+    df_visit_id = df_merged_para_tasa_de_conversion_total[df_merged_para_tasa_de_conversion_total['process_step'] == 'start'][['visit_id', 'variation']]
+
+    #unimos ambos dataframes
+    df_conversion = df_visit_id.merge(df_confirm_visit_id, how='left', on='visit_id')
+
+    #creamos los dos dataframes finales para el test de la hipótesis
+    df_conversion_test = df_conversion[df_conversion['variation'] == 'Test'].fillna(0)
+    df_conversion_control = df_conversion[df_conversion['variation'] == 'Control'].fillna(0)
+
+    #calculamos el p_value
+    t_stat, p_value = st.ttest_ind(df_conversion_test['confirm_binary'], df_conversion_control['confirm_binary'], equal_var=False, alternative="greater")    
+    
+    #imprimimos el resultado según la dirección de la hipótesis alternativa
+    if alternative == "greater":
+        if p_value > alpha:
+            print("No hemos sido capaces de rechazar la hipótesis nula.")
+        else:
+            print("Rechazamos la hipótesis nula.")
+    elif alternative == "less":
+        if p_value > alpha:
+            print("No hemos sido capaces de rechazar la hipótesis nula.")
+        else:
+            print("Rechazamos la hipótesis nula.")
+    elif alternative == "two-sided":
+        if p_value > alpha:
+            print("No hemos sido capaces de rechazar la hipótesis nula.")
+        else:
+            print("Rechazamos la hipótesis nula.")
+    else:
+        print("Dirección de hipótesis no válida. Por favor, elige 'greater', 'less' o 'two-sided'.")
+
 def grafico_tasa_abandono_test_control(df_exp, df_final_web_data):
 
     import pandas as pd
@@ -644,6 +708,81 @@ def grafico_tiempo_permanencia_test_control(df_exp, df_final_web_data):
     plt.tight_layout()
     plt.show()
 
+def test_hipotesis_tiempo_permanencia(df_final_web_data, df_exp, alpha=0.05, alternative='greater'):
+
+    """
+    Función para realizar un test de hipótesis sobre la diferencia de tiempo promedio entre cada una de las variaciones.
+    
+    Args:
+        dataframes: df_final_web_data, df_exp.
+        alpha (float, optional): Nivel de significancia. Por defecto es 0.05.
+        alternative (str, optional): Dirección de la hipótesis alternativa. Puede ser 'greater' (mayor), 'less' (menor) o 'two-sided' (dos colas). Por defecto es 'greater'.
+        
+    Returns:
+        str: Resultado del test de hipótesis.
+    """
+
+    import pandas as pd
+    import scipy.stats as st
+    
+    #agrupamos el df_final_web_data con df_exp para añadir si el cliente ha visto la plataforma original o el test
+    df_transacciones = df_final_web_data.merge(df_exp, how='left', left_on='client_id', right_on='client_id').dropna(subset='variation')
+
+    #agrupamos el df_final_web_data con df_exp para añadir si el cliente ha visto la plataforma original o el test
+    df_transacciones = df_final_web_data.merge(df_exp, how='left', left_on='client_id', right_on='client_id').dropna(subset='variation')
+
+    #ordenamos los valores del df por cliente id, visita id y
+    df_transacciones = df_transacciones.sort_values(by=['client_id', 'visit_id', 'date_time'])
+
+    #creamos una nueva columna en la que añadimos la fecha en la que el usuario realizó el paso anterior
+    df_transacciones['time_last_step'] = df_transacciones.groupby(by=['client_id', 'visit_id'])['date_time'].shift(1)
+
+    #creamos una nueva columna para añadir el paso anterior al actual
+    df_transacciones['last_step'] = df_transacciones.groupby(by=['client_id', 'visit_id'])['process_step'].shift(1)
+
+    #restamos la fecha del paso anterior a la del actual para ver cuánto ha tardado en pasar de un paso a otro
+    df_transacciones['time_difference'] = df_transacciones['date_time'] - df_transacciones['time_last_step']
+
+    #agregamos una nueva columna en la que incluimos el nombre del paso anterior y el paso actual
+    df_transacciones['steps'] = df_transacciones['process_step'].astype(str) + '_' + df_transacciones['last_step'].astype(str)
+
+    #agrupamos el dataframe por variación y tiempo entrada y de salida de cada usuario por id de visita
+    df_tiempo_de_permanencia = df_transacciones.groupby(by=['variation', 'visit_id'])['date_time'].agg(['max', 'min']).reset_index()
+
+    #agregamos una columna con el tiempo total por sesión de cada id de visita
+    df_tiempo_de_permanencia['difference_time'] = df_tiempo_de_permanencia['max'] - df_tiempo_de_permanencia['min']
+
+    #transformamos el tiempo a segundos
+    df_tiempo_de_permanencia['difference_time_in_seconds'] = df_tiempo_de_permanencia['difference_time'].dt.total_seconds()
+
+    #creamos los dos dataframes finales para el análisis
+    df_tiempo_de_permanencia_control = df_tiempo_de_permanencia[(df_tiempo_de_permanencia['variation'] == 'Control')]['difference_time_in_seconds']
+    #creamos el segundo dataframe
+    df_tiempo_de_permanencia_test = df_tiempo_de_permanencia[(df_tiempo_de_permanencia['variation'] == 'Test')]['difference_time_in_seconds']
+
+    #calculamos el p_value
+    t_stat, p_value = st.ttest_ind(df_tiempo_de_permanencia_test, df_tiempo_de_permanencia_control, equal_var=False, alternative=alternative)
+    
+    #mostramos si se rechaza o no la hipótesis nula según la alternativa elegida por el usuario y el valor de alpha
+    if alternative == "greater":
+        if p_value > alpha:
+            return "No hemos sido capaces de rechazar la hipótesis nula."
+        else:
+            return "Rechazamos la hipótesis nula."
+    elif alternative == "less":
+        if p_value > alpha:
+            return "No hemos sido capaces de rechazar la hipótesis nula."
+        else:
+            return "Rechazamos la hipótesis nula."
+    elif alternative == "two-sided":
+        if p_value > alpha:
+            return "No hemos sido capaces de rechazar la hipótesis nula."
+        else:
+            return "Rechazamos la hipótesis nula."
+    else:
+        return "Dirección de hipótesis no válida. Por favor, elige 'greater', 'less' o 'two-sided'."
+
+
 def grafico_tiempo_permanencia_menor_10_secs(df_exp, df_final_web_data):
 
     import pandas as pd
@@ -683,4 +822,76 @@ def grafico_tiempo_permanencia_menor_10_secs(df_exp, df_final_web_data):
 
     #mostramos el gráfico
     plt.show()
+
+def normalizar_distribucion(df, column_name):
+    
+    """
+    Función para normalizar la distribución de una columna en un DataFrame.
+
+    Args:
+    df (DataFrame): El DataFrame que contiene los datos.
+    column_name (str): El nombre de la columna que se desea normalizar.
+
+    Return:
+    DataFrame: El DataFrame con la columna normalizada y algunas estadísticas.
+    """
+
+    import pandas as pd
+    import numpy as np
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+    from scipy import stats
+    from sklearn.preprocessing import PowerTransformer, StandardScaler
+    from scipy.stats import johnsonsu, kstest
+
+    # Paso 1: Verificar la distribución original
+    sns.histplot(df[column_name], kde=True, bins=100)
+    plt.title("Distribución Original")
+    plt.show()
+
+    # Paso 2: Aplicar Box-Cox Transformation
+    boxcox_data, lmbda = stats.boxcox(df[column_name] + 1)  # Se suma 1 para evitar log(0)
+    boxcox_data_standardized = StandardScaler().fit_transform(boxcox_data.reshape(-1, 1))
+
+    # Realizar la prueba de Kolmogorov-Smirnov para normalidad
+    ks_result_boxcox = kstest(boxcox_data_standardized, 'norm')
+
+    # Graficar la distribución de Box-Cox
+    sns.histplot(boxcox_data, kde=True)
+    plt.title("Distribución Box-Cox")
+    plt.show()
+
+    print(f'KS Test Statistic (Box-Cox): {ks_result_boxcox.statistic}, p-value: {ks_result_boxcox.pvalue}')
+    print(f'Lambda used for Box-Cox transformation: {lmbda}')
+
+    # Paso 3: Aplicar Yeo-Johnson Transformation
+    pt = PowerTransformer(method='yeo-johnson')
+    yeojohnson_data = pt.fit_transform(df[[column_name]])
+
+    # Realizar la prueba de Kolmogorov-Smirnov para normalidad
+    ks_result_yeojohnson = kstest(yeojohnson_data.flatten(), 'norm')
+
+    # Graficar la distribución de Yeo-Johnson
+    sns.histplot(yeojohnson_data.flatten(), kde=True)
+    plt.title("Distribución Yeo-Johnson")
+    plt.show()
+
+    print(f'KS Test Statistic (Yeo-Johnson): {ks_result_yeojohnson.statistic}, p-value: {ks_result_yeojohnson.pvalue}')
+
+    # Paso 4: Aplicar Rankeo
+    ranked_data = df[column_name].rank()
+    ranked_data_standardized = StandardScaler().fit_transform(ranked_data.values.reshape(-1, 1))
+
+    # Realizar la prueba de Kolmogorov-Smirnov para normalidad
+    ks_result_ranked = kstest(ranked_data_standardized.flatten(), 'norm')
+
+    # Graficar la distribución de Rankeo
+    sns.histplot(ranked_data, kde=True)
+    plt.title("Distribución de Rankeo")
+    plt.show()
+
+    print(f'KS Test Statistic (Ranked): {ks_result_ranked.statistic}, p-value: {ks_result_ranked.pvalue}')
+
+    # Retornar el DataFrame con las transformaciones aplicadas
+    return df, lmbda
 
