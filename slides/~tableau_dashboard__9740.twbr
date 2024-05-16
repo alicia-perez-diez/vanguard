@@ -3743,7 +3743,7 @@
             <groupfilter function='except' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
               <groupfilter function='level-members' level='[none:steps:nk]' />
               <groupfilter function='union'>
-                <groupfilter function='member' level='[none:steps:nk]' member='&quot;confirm_start&quot;' />
+                <groupfilter function='member' level='[none:steps:nk]' member='&quot;confirm_confirm&quot;' />
                 <groupfilter function='member' level='[none:steps:nk]' member='&quot;confirm_step_1&quot;' />
                 <groupfilter function='member' level='[none:steps:nk]' member='&quot;confirm_step_2&quot;' />
                 <groupfilter function='member' level='[none:steps:nk]' member='&quot;confirm_step_3&quot;' />
@@ -4442,7 +4442,7 @@
       </cards>
       <simple-id uuid='{76C6DBB0-6534-4D82-A072-153E8F758822}' />
     </window>
-    <window class='worksheet' name='tiempo_entre_pasos'>
+    <window class='worksheet' maximized='true' name='tiempo_entre_pasos'>
       <cards>
         <edge name='left'>
           <strip size='236'>
@@ -4527,7 +4527,7 @@
       </cards>
       <simple-id uuid='{4F168417-BBEE-4564-B173-2493B85551C4}' />
     </window>
-    <window class='worksheet' maximized='true' name='errores_total'>
+    <window class='worksheet' name='errores_total'>
       <cards>
         <edge name='left'>
           <strip size='281'>
