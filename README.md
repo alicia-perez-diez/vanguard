@@ -1,13 +1,13 @@
-# Análisis de XXXXXXXXXXXXXXXXXXX
+# Análisis de Vanguard 
 
-Análisis preliminar de la relación entre las características del alojamiento turístico y la incidencia de crímenes en los distintos barrios de Nueva York entre los años 2016 y 2018.
+Análisis preliminar de los resultados de un A/B test diseñado para comparar el rendimiento de dos versiones de una página web: la versión original y una nueva variación. 
 
 ## 👋 Introducción
 
-¡Hola, analista o curioso de los datos! 📈 Somos Alicia y Elena, estudiantes de análisis de datos de Ironhack. En este notebook, analizamos la relación entre las características del alojamiento turístico -precio y número de reviews- y la criminalidad por barrio.
+¡Hola, analista o curioso de los datos! 📈 Somos Alicia y Andrea, estudiantes de análisis de datos de Ironhack. En este notebook, analizamos la relación entre las características de las diferentes variaciones -tiempo de actividad- y pasos de seguimiento así como también género, edades, números de cuentas, etc.
 
-Puedes ver la presentación de nuestro proyecto en el siguiente <a href="https://docs.google.com/presentation/d/1WX-RsSYI5R3UwbxyNprzxAgdTX-QlEnG5elb00gE7fk/edit?usp=sharing">enlace.</a>
-Y el enlace al ERD a<a href="https://www.figma.com/file/gOvrnYqe9p5d0xPGVYHeHR/ny_project_ERD?type=design&mode=design">aquí.</a>.
+Puedes ver la presentación de nuestro proyecto en el siguiente <a href="https://docs.google.com/presentation/d/1vSNEadz79u18YiQYsnBKMEvWcnifkc6X7wpc-tL2ZQA/edit?usp=sharing">enlace.</a>
+Y el enlace al tableau a<a href="https://public.tableau.com/app/profile/alicia.p.rez1100/viz/tableau_dashboard_17157156255840/Story1">aquí.</a>.
 
 ## Tabla de contenidos
 
@@ -17,45 +17,74 @@ Y el enlace al ERD a<a href="https://www.figma.com/file/gOvrnYqe9p5d0xPGVYHeHR/n
 
 ## Metadatos
 
-- Autores: Alicia Pérez y Elena Marcet.
-- Fecha de creación: 03/05/2024.
-- Última modificación: 03/05/2024.
-- Fuente de datos:
-    <a href= "https://www.kaggle.com/datasets/dgomonov/new-york-city-airbnb-open-data">NY City Airbnb Open Data.</a>
-    <a href= "https://www.kaggle.com/datasets/mrmorj/new-york-city-police-crime-data-historic">NY City Police Crime Data Historic.</a>
+- Autores: Alicia Pérez y Andrea Wahnon.
+- Fecha de creación: 17/05/2024.
+- Última modificación: 17/05/2024.
 
 ## Estructura del análisis
 
-- Planificación del proyecto: definición de retos de negocio, búsqueda de hipótesis y desarrollo del ERD.
-- Limpieza y formateo previos con Python: agrupación preliminar para reducir el peso de la base de datos sobre crímenes.
-- Importación de datos: importación de los dos dataframes a MySQL Workbench.
-- Agrupación final y análisis estadístico con MySQL.
-- Técnicas de visualización para la definición de la relación entre precio y número de reviews y el nivel de criminalidad por barrio en Nueva York.
+- Planificación del proyecto: definición de retos de negocio, búsqueda de hipótesis.
+- Limpieza y formateo previos con Python: agrupación preliminar para reducir el peso de la base de datos de usuarios.
+- Importación de datos: importación de los tres dataframes a Tableau.
+- Agrupación final y análisis estadístico con Tableau
+- Técnicas de visualización para la definición de la relación entre las características de las diferentes variaciones -tiempo de actividad- y pasos de seguimiento.
 
 ## 📊 Insights visuales
 
-![Evolución de los crímenes en NY entre los años 2016 y 2018](https://drive.google.com/uc?export=view&id=1TkdW12bukc-txEcwhbJ1O9lQxmRbqpWG)
+![Género y edad de usuarios](https://drive.google.com/uc?export=view&id=1a5t66pQLHmVjPHzPVzoCfSRiQMxLkWGe)
 
-Gráfica que muestra la evolución porcentual de los crímenes en NY entre los años 2016 y 2018.
+Gráfica que muestra el género y edad de usuarios.
 
-![Promedio de crímenes por barrio](https://drive.google.com/uc?export=view&id=1yjVbCoeo6RKNqgX_NYTr7-fwPyyY_0EZ)
+![Fidelidad de Usuarios por variación](https://drive.google.com/uc?export=view&id=1wh6J-1eAxwv6vRTm_lWq6McZ5Gobd6FRie5I9k)
 
-Gráfica que muestra el promedio de crímenes por barrio.
+Gráfica que muestra el porcentaje de fidelidad de los usuarios por variación.
 
-![Promedio de crímenes por barrio](https://drive.google.com/uc?export=view&id=1wh6J-3ZUOC5Ny7XH9tzzsLkD543zQJEy)
+![Número de cuentas por dinero en cuenta](https://drive.google.com/uc?export=view&id=1ujH1nzYWQdsHWt-pDmBY06pZ9atpepSw)
 
-Gráfica que muestra el promedio de crímenes por gravedad de infracción por barrio.
+Gráfica que muestra el número de cuentas por dinero en cuenta.
 
-![Promedio de precio por barrio](https://drive.google.com/uc?export=view&id=1QUBwitt444cS18JfHgs-LzXyx5U-AboS)
+![Tráfico de Usuarios por Variación](https://drive.google.com/uc?export=view&id=1r7XOvN4iGXRl3qe7l0WOrcn6Rf2x4T6K)
 
-Gráfica que muestra el precio promedio por barrio.
+Gráfica que muestra el tráfico de usuarios por variación.
 
-![Promedio de reviews por barrio](https://drive.google.com/uc?export=view&id=1w5n0cHb5kvEdJp7ShQj0D0IdLUdfaSmO)
+[Tráfico de Usuarios por mes y días por Variación](https://drive.google.com/uc?export=view&id=1ZrNr9SmrotbzmeuDrMtrfnIIKE5ygnMD)
 
-Gráfica que muestra el porcentaje de reviews por barrio.
+Gráfica que muestra el tráfico de usuarios por mes y días por variación.
 
-![Relación entre el precio y el número de reviews por barrio](https://drive.google.com/uc?export=view&id=1xNtwFXSffSLgFQEgKpWDYRLw96Jp5N-O)
+[Tráfico de Usuarios por hora por Variación](https://drive.google.com/uc?export=view&id=19bxKCoSNzVgTTzFHhPb7o7LPzzpm1Jhu)
 
-Relación entre el precio y el número de reviews por barrio.
+Gráfica que muestra el tráfico de usuarios por hora por variación.
+
+[Tiempo medio de permanencia en la plataforma](https://drive.google.com/uc?export=view&id=1FzSuLIeu8PGdw7o6EVNzt3YYn6wQCqoX)
+
+Gráfica que muestra el tiempo medio de permanencia en la plataforma por variación.
+
+[Tiempo de permanencia de los usuarios menor de 10 Segundos](https://drive.google.com/uc?export=view&id=1pKu22D54kfwOQskgLkn-1FGk2Rq9JhBz)
+
+Gráfica que muestra el tiempo de permanencia de los usuarios menor de 10 segundos por variación.
+
+![Tasa de conversion total](https://drive.google.com/uc?export=view&id=1syz2DptCpGMYQgfb0OXZVafBkH9OOK4y)
+
+Gráfica que muestra la tasa de conversión total.
+
+![Drop-off total de cada paso por variación](https://drive.google.com/uc?export=view&id=1haiSHLumcFlypUQqN8Qcz_CuPeKYWgu2)
+
+Gráfica que muestra el drop off de cada paso por variación.
+
+![Tiempo promedio entre pasos por variación](https://drive.google.com/uc?export=view&id=1CZjGD9oB67t6CGJjCslscmpTVUErZa-H)
+
+Gráfica que muestra el tiempo promedio entre pasos por variación.
+
+![Total de errores cometidos en cada paso por variación](https://drive.google.com/uc?export=view&id=1FsKNKkgJUg_PvZH2D0-8rMr13PBJmNcG)
+
+Gráfica que muestra el total de errores en cada paso por variación.
+
+![Total de errores cometidos por los usuarios por variación](https://drive.google.com/uc?export=view&id=1FpXoRIVm2r6df510kXNkUxweM1Ia1M6i)
+
+Gráfica que muestra el total de errores por los usuarios por variación.
+
+![Tasa de Abandono Total por Vareación](https://drive.google.com/uc?export=18UZp6JzHLSGkr3PDBa_vWLBMbMFUXcW8)
+
+Gráfica que muestra total de abandono por variación.
 
 ¡Gracias por leernos 😊!
