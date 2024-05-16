@@ -1072,3 +1072,111 @@ def grafico_tiempo_permanencia_menor_10_secs(df_exp, df_final_web_data):
 
     #mostramos el gráfico
     plt.show()
+
+def normalizar_distribucion_tiempo_permanencia(df_final_web_data, df_exp, version='Control'):
+    
+    """
+    Función para normalizar la distribución del tiempo de permanencia.
+
+    Args:
+    df_final_web_data (DataFrame): dataframe principal para generar los dataframes finales.
+    df_exp: dataframe principal para generar los dataframes finales.
+    version = 'Control' o 'Test'.
+
+    Return:
+    DataFrame: El DataFrame con la columna normalizada y algunas estadísticas.
+    """
+
+    import pandas as pd
+    import numpy as np
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+    from scipy import stats
+    from sklearn.preprocessing import PowerTransformer, StandardScaler
+    from scipy.stats import johnsonsu, kstest
+
+    # Agrupar el dataframe final con el experimento para añadir si el cliente ha visto la plataforma original o el test
+    df_transacciones = df_final_web_data.merge(df_exp, how='left', left_on='client_id', right_on='client_id').dropna(subset='variation')
+
+    # Ordenar los valores del dataframe por cliente id, visita id y fecha
+    df_transacciones = df_transacciones.sort_values(by=['client_id', 'visit_id', 'date_time'])
+
+    # Crear una nueva columna en la que añadimos la fecha en la que el usuario realizó el paso anterior
+    df_transacciones['time_last_step'] = df_transacciones.groupby(by=['client_id', 'visit_id'])['date_time'].shift(1)
+
+    # Crear una nueva columna para añadir el paso anterior al actual
+    df_transacciones['last_step'] = df_transacciones.groupby(by=['client_id', 'visit_id'])['process_step'].shift(1)
+
+    # Restar la fecha del paso anterior a la del actual para ver cuánto ha tardado en pasar de un paso a otro
+    df_transacciones['time_difference'] = df_transacciones['date_time'] - df_transacciones['time_last_step']
+
+    # Agregar una nueva columna en la que incluimos el nombre del paso anterior y el paso actual
+    df_transacciones['steps'] = df_transacciones['process_step'].astype(str) + '_' + df_transacciones['last_step'].astype(str)
+
+    # Agrupar el dataframe por variación y tiempo de entrada y salida de cada usuario por id de visita
+    df_tiempo_de_permanencia = df_transacciones.groupby(by=['variation', 'visit_id'])['date_time'].agg(['max', 'min']).reset_index()
+
+    # Agregar una columna con el tiempo total por sesión de cada id de visita
+    df_tiempo_de_permanencia['difference_time'] = df_tiempo_de_permanencia['max'] - df_tiempo_de_permanencia['min']
+    
+    # Transformar el tiempo a segundos
+    df_tiempo_de_permanencia['difference_time_in_seconds'] = df_tiempo_de_permanencia['difference_time'].dt.total_seconds()
+
+    # Quedarse solo con la columna de variación y la diferencia de tiempo en segundos
+    df_tiempo_de_permanencia = df_tiempo_de_permanencia[['variation', 'difference_time_in_seconds']]
+
+    # Crear los dataframes finales para el análisis distinguiendo por variación: control y test
+    df_tiempo_de_permanencia_control = df_tiempo_de_permanencia[df_tiempo_de_permanencia['variation'] == 'Control']
+    df_tiempo_de_permanencia_test = df_tiempo_de_permanencia[df_tiempo_de_permanencia['variation'] == 'Test']
+    """
+    if version == 'Control':
+        standardized_data = ((df_tiempo_de_permanencia_control['difference_time_in_seconds'] - df_tiempo_de_permanencia_control['difference_time_in_seconds'].mean()) /
+                             df_tiempo_de_permanencia_control['difference_time_in_seconds'].std())
+        ks_test_statistic, ks_p_value = stats.kstest(standardized_data, 'norm')
+        if ks_p_value < 0.05:
+            print('La distribución de tiempo de permanencia en la versión de Control es diferente a una distribución normal')
+        else:
+            print('La distribución de tiempo de permanencia en la versión de Control no es significativamente diferente a la normal')
+    else:  # Para la versión de Test
+        standardized_data = ((df_tiempo_de_permanencia_test['difference_time_in_seconds'] - df_tiempo_de_permanencia_test['difference_time_in_seconds'].mean()) /
+                             df_tiempo_de_permanencia_test['difference_time_in_seconds'].std())
+        ks_test_statistic, ks_p_value = stats.kstest(standardized_data, 'norm')
+    """
+
+    #eliminamos los outliers
+    Q1 = df_tiempo_de_permanencia_control['difference_time_in_seconds'].quantile(0.25)
+    Q3 = df_tiempo_de_permanencia_control['difference_time_in_seconds'].quantile(0.75)
+    IQR = Q3 - Q1
+
+    #establecemos los límites de los outliers
+    limite_bajo = Q1 - 1 * IQR
+    limite_alto = Q3 + 1 * IQR
+
+    #identificamos los outliers y los filtramos de la tabla
+    df_tiempo_de_permanencia_control = df_tiempo_de_permanencia_control[(df_tiempo_de_permanencia_control['difference_time_in_seconds'] >= limite_bajo) & (df_tiempo_de_permanencia_control['difference_time_in_seconds'] <= limite_alto)]
+
+
+    # Realizar la transformación de Johnson-SU
+    params = johnsonsu.fit(df_tiempo_de_permanencia_control['difference_time_in_seconds'])
+    transformed_data = johnsonsu(*params).rvs(len(df_tiempo_de_permanencia_control['difference_time_in_seconds']))
+    standardized_transformed_data = StandardScaler().fit_transform(transformed_data.reshape(-1, 1))
+
+    # Realizar la prueba de Kolmogorov-Smirnov para normalidad en los datos transformados
+    ks_result = kstest(standardized_transformed_data.flatten(), 'norm')
+
+    # Graficar la distribución transformada
+    sns.histplot(transformed_data, kde=False)
+    plt.title("Distribución Johnson-SU")
+    plt.show()
+
+    import plotly.express as px
+    px.data.tips()
+    fig = px.histogram(pd.DataFrame(transformed_data)[0], nbins=100)
+    fig.show()
+
+    # Conclusión
+    if ks_p_value < 0.05:
+        print('La distribución no se ha podido normalizar.')
+        print('Se emplearán algoritmos que permitan distribuciones no normales.')
+    else:
+        print('La distribución se ha normalizado con éxito.')
