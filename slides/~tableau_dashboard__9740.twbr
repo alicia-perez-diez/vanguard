@@ -3740,21 +3740,17 @@
             <groupfilter function='member' level='[md:date_time:ok]' member='20170405' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
           </filter>
           <filter class='categorical' column='[federated.0e3dbmx1ejlj5j1d7kk3o1ixuwo5].[none:steps:nk]'>
-            <groupfilter function='except' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
-              <groupfilter function='level-members' level='[none:steps:nk]' />
-              <groupfilter function='union'>
-                <groupfilter function='member' level='[none:steps:nk]' member='&quot;confirm_confirm&quot;' />
-                <groupfilter function='member' level='[none:steps:nk]' member='&quot;confirm_step_1&quot;' />
-                <groupfilter function='member' level='[none:steps:nk]' member='&quot;confirm_step_2&quot;' />
-                <groupfilter function='member' level='[none:steps:nk]' member='&quot;confirm_step_3&quot;' />
-                <groupfilter function='member' level='[none:steps:nk]' member='&quot;step_1_start&quot;' />
-                <groupfilter function='member' level='[none:steps:nk]' member='&quot;step_2_start&quot;' />
-                <groupfilter function='member' level='[none:steps:nk]' member='&quot;step_2_step_1&quot;' />
-                <groupfilter function='member' level='[none:steps:nk]' member='&quot;step_3_start&quot;' />
-                <groupfilter function='member' level='[none:steps:nk]' member='&quot;step_3_step_1&quot;' />
-                <groupfilter function='member' level='[none:steps:nk]' member='&quot;step_3_step_2&quot;' />
-                <groupfilter function='member' level='[none:steps:nk]' member='%null%' />
-              </groupfilter>
+            <groupfilter function='union' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
+              <groupfilter function='member' level='[none:steps:nk]' member='&quot;confirm_start&quot;' />
+              <groupfilter function='member' level='[none:steps:nk]' member='&quot;confirm_step_1&quot;' />
+              <groupfilter function='member' level='[none:steps:nk]' member='&quot;confirm_step_2&quot;' />
+              <groupfilter function='member' level='[none:steps:nk]' member='&quot;confirm_step_3&quot;' />
+              <groupfilter function='member' level='[none:steps:nk]' member='&quot;step_1_start&quot;' />
+              <groupfilter function='member' level='[none:steps:nk]' member='&quot;step_2_start&quot;' />
+              <groupfilter function='member' level='[none:steps:nk]' member='&quot;step_2_step_1&quot;' />
+              <groupfilter function='member' level='[none:steps:nk]' member='&quot;step_3_start&quot;' />
+              <groupfilter function='member' level='[none:steps:nk]' member='&quot;step_3_step_1&quot;' />
+              <groupfilter function='member' level='[none:steps:nk]' member='&quot;step_3_step_2&quot;' />
             </groupfilter>
           </filter>
           <manual-sort column='[federated.0e3dbmx1ejlj5j1d7kk3o1ixuwo5].[none:steps:nk]' direction='ASC'>
@@ -4442,7 +4438,7 @@
       </cards>
       <simple-id uuid='{76C6DBB0-6534-4D82-A072-153E8F758822}' />
     </window>
-    <window class='worksheet' maximized='true' name='tiempo_entre_pasos'>
+    <window class='worksheet' name='tiempo_entre_pasos'>
       <cards>
         <edge name='left'>
           <strip size='236'>
@@ -4603,7 +4599,7 @@
       <active id='-1' />
       <simple-id uuid='{3EF33907-7CC3-4314-A243-46E03A8005AA}' />
     </window>
-    <window class='dashboard' name='Performance'>
+    <window class='dashboard' maximized='true' name='Performance'>
       <viewpoints>
         <viewpoint name='dias_meses_mas_activos'>
           <zoom type='entire-view' />
