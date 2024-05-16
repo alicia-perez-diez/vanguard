@@ -656,10 +656,12 @@ def grafico_tiempo_promedio_entre_pasos_test_control(df_exp, df_final_web_data):
     fig.update_layout(xaxis=dict(categoryorder='array', categoryarray=orden))
 
     #modificamos el título y etiquetas del gráfico
-    fig.update_layout(title="Tiempo promedio que tardan los usuarios en ir de un paso a otro según variación", xaxis_title='pasos', yaxis_title='tiempo promedio')
+    fig.update_layout(title="Tiempo promedio que tardan los usuarios en ir de un paso a otro según variación", xaxis_title='pasos', yaxis_title='tiempo promedio',
+                      width=700, height= 400)
 
     #mostramos el gráfico
-    fig.show()
+    #fig.show()
+    return fig
 
 def grafico_tasa_de_conversion_por_paso_test_control(df_exp, df_final_web_data):
 
