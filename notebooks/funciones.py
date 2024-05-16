@@ -1,6 +1,18 @@
 def leer_datos(yalm_path):
 
-    """input, output y qué hace cada función"""
+    """
+    Lee los datos de archivos CSV especificados en el archivo YAML.
+
+    Argumentos:
+    - yalm_path (str): Ruta del archivo YAML que contiene la información de los archivos CSV.
+
+    Devuelve:
+    - df_final_demo (DataFrame de Pandas): DataFrame que contiene los datos finales de demostración.
+    - df_final_web_data (DataFrame de Pandas): DataFrame que contiene los datos web finales.
+    - df_exp (DataFrame de Pandas): DataFrame que contiene los datos de experimentos de clientes.
+
+    Si hay algún error durante la lectura o importación de los datos, la función imprime un mensaje de error y retorna None.
+    """
 
     import pandas as pd
     import yaml
@@ -28,6 +40,22 @@ def leer_datos(yalm_path):
 
 def limpiar_dataframes(df_final_demo, df_final_web_data, df_exp):
 
+    """
+    Realiza operaciones de limpieza en DataFrames específicos.
+
+    Argumentos:
+    - df_final_demo (DataFrame de Pandas): DataFrame que contiene los datos finales de demostración.
+    - df_final_web_data (DataFrame de Pandas): DataFrame que contiene los datos web finales.
+    - df_exp (DataFrame de Pandas): DataFrame que contiene los datos de experimentos de clientes.
+
+    Devuelve:
+    - df_final_demo (DataFrame de Pandas): DataFrame modificado de los datos finales de demostración.
+    - df_final_web_data (DataFrame de Pandas): DataFrame modificado de los datos web finales.
+    - df_exp (DataFrame de Pandas): DataFrame modificado de los datos de experimentos de clientes.
+
+    Realiza varias operaciones de limpieza en los DataFrames proporcionados:
+    """
+
     import pandas as pd
 
     #eliminamos la columna clnt_tenure_mnth
@@ -52,6 +80,19 @@ def limpiar_dataframes(df_final_demo, df_final_web_data, df_exp):
 
 def crear_dataframe_principales_clientes(df_final_demo):
 
+    """
+    Crea un nuevo DataFrame con los principales clientes basados en el dinero total de sus cuentas.
+
+    Argumentos:
+    - df_final_demo (DataFrame de Pandas): DataFrame que contiene los datos finales de demostración.
+
+    Devuelve:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene únicamente los datos de los principales clientes.
+
+    Esta función calcula los principales clientes basados en el dinero total de sus cuentas en el DataFrame proporcionado.
+    Luego, filtra el DataFrame original solo para incluir los datos de los clientes principales y retorna este nuevo DataFrame.
+    """
+
     import pandas as pd
 
     #calcular los principales clientes basados en el dinero total de sus cuentas
@@ -63,6 +104,21 @@ def crear_dataframe_principales_clientes(df_final_demo):
     return df_clientes_principales
 
 def crear_dataframe_promedio_tiempo_por_paso(df_exp, df_final_web_data):
+
+    """
+    Crea un nuevo DataFrame para analizar el tiempo promedio por paso en el proceso de transacción.
+
+    Argumentos:
+    - df_exp (DataFrame de Pandas): DataFrame que contiene los datos de experimentos de clientes.
+    - df_final_web_data (DataFrame de Pandas): DataFrame que contiene los datos web finales.
+
+    Devuelve:
+    - df_transacciones_para_grafico (DataFrame de Pandas): DataFrame que contiene los datos procesados para analizar el tiempo promedio por paso. 
+
+    Esta función realiza las siguientes operaciones para crear el DataFrame de salida.
+    Retorna el DataFrame procesado para su posterior análisis del tiempo promedio por paso en el proceso de transacción.
+    """
+
     #eliminamos los datos nulos y con ellos se eliminan 20109 filas
     df_exp = df_exp.dropna(subset =["variation"])
 
@@ -97,10 +153,24 @@ def crear_dataframe_promedio_tiempo_por_paso(df_exp, df_final_web_data):
 
 def guardar_como_csv(df, nombre_archivo):
 
-    """Esta función toma dos argumentos:
-        - df: el dataframe que queremos guardar como csv
-        - nombre_archivo que es nombre que queremos darle al archivo
-    y guarda el dataframe como archivo csv en la ubicación 'ruta'"""
+    """
+    Guarda un DataFrame como archivo CSV en una ubicación específica.
+
+    Argumentos:
+    - df (DataFrame de Pandas): DataFrame que se desea guardar como archivo CSV.
+    - nombre_archivo (str): Nombre del archivo CSV.
+
+    Esta función guarda el DataFrame proporcionado como un archivo CSV en una ubicación específica.
+    La ruta de la carpeta donde se guarda el archivo CSV está predefinida en la variable 'ruta'.
+    Utiliza os.path.join() para unir la ruta de la carpeta con el nombre del archivo proporcionado,
+    generando así la ruta completa donde se guardará el archivo CSV.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente guarda el archivo CSV en la ubicación especificada.
+
+    Ejemplo de uso:
+    guardar_como_csv(df, "datos_guardados.csv")
+    """
 
     import os
 
@@ -113,6 +183,16 @@ def guardar_como_csv(df, nombre_archivo):
     df.to_csv(ruta_completa, sep=',', encoding='utf-8', index=False)
 
 def grafico_edad_clientes_principales(df_clientes_principales):
+
+    """
+    Genera un gráfico de distribución de edades de los principales clientes.
+
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico de distribución de edades de los principales clientes.
+    """   
 
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -136,6 +216,16 @@ def grafico_edad_clientes_principales(df_clientes_principales):
     print('jóvenes hasta 36, adultos jóvenes hasta 54 y adultos mayores a partir de 54')
 
 def grafico_genero_clientes_principales(df_clientes_principales):
+
+    """
+    Genera un gráfico de distribución de géneros de los clientes principales.
+
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico.
+    """       
     
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -155,6 +245,16 @@ def grafico_genero_clientes_principales(df_clientes_principales):
 
     
 def grafico_fidelidad_clientes_principales(df_clientes_principales):
+
+    """
+    Genera un gráfico de distribución de los años que llevan los clientes principales siéndolo.
+
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico.
+    """    
 
     import pandas as pd
     import seaborn as sns
@@ -178,6 +278,15 @@ def grafico_fidelidad_clientes_principales(df_clientes_principales):
     print('0-5 = clientes nuevos, 5-15 = clientes consolidados, >15 = clientes antiguos')
 
 def graficos_contacto_clientes_ultimos_meses(df_clientes_principales):
+
+    """
+    Genera un gráfico de distribución del contacto con la empresa de los clientes principales en los últimos 6 meses.
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico.
+    """  
     
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -205,6 +314,16 @@ def graficos_contacto_clientes_ultimos_meses(df_clientes_principales):
     plt.show()
 
 def grafico_num_cuentas_clientes_principales(df_clientes_principales):
+
+    """
+    Genera un gráfico de distribución con el número de cuentas que tienen los clientes principales.
+
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico.
+    """  
     
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -225,6 +344,16 @@ def grafico_num_cuentas_clientes_principales(df_clientes_principales):
     plt.show()
 
 def mapa_calor_valores_numericos(df_clientes_principales):
+
+    """
+    Genera un mapa de calor entre todos los valores numéricos.
+
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico.
+    """  
 
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -247,6 +376,16 @@ def mapa_calor_valores_numericos(df_clientes_principales):
 
 def grafico_dinero_y_num_cuentas(df_clientes_principales):
 
+    """
+    Genera un gráfico de distribución del número de cuentas y dinero en cuenta de los clientes principales.
+
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico.
+    """  
+
     import pandas as pd
     import matplotlib.pyplot as plt
     import seaborn as sns
@@ -266,6 +405,16 @@ def grafico_dinero_y_num_cuentas(df_clientes_principales):
     plt.show()
 
 def grafico_dinero_segun_edad(df_clientes_principales):
+
+    """
+    Genera un gráfico de distribución del dinero en cuenta según la edad de los clientes principales.
+
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico.
+    """ 
     
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -295,6 +444,16 @@ def grafico_dinero_segun_edad(df_clientes_principales):
     print('jóvenes hasta 36, adultos jóvenes hasta 54 y adultos mayores a partir de 54')
 
 def grafico_edad_genero_y_num_cuentas(df_clientes_principales):
+
+    """
+    Genera un gráfico que muestra la relación entre la edad, el género y el número de cuentas de los clientes principales.
+
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico.
+    """ 
     
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -316,6 +475,16 @@ def grafico_edad_genero_y_num_cuentas(df_clientes_principales):
     plt.show()
 
 def grafico_edad_genero_y_dinero(df_clientes_principales):
+
+    """
+    Genera un gráfico que muestra la relación entre la edad, el género y el dinero en cuenta de los clientes principales.
+
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico.
+    """ 
     
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -337,6 +506,16 @@ def grafico_edad_genero_y_dinero(df_clientes_principales):
     plt.show()
 
 def grafico_proporcion_test_control(df_exp):
+
+    """
+    Genera un gráfico de distribución entre los clientes principales que han visto la plataforma original y los que han visto el test.
+
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico.
+    """ 
 
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -366,6 +545,16 @@ def grafico_proporcion_test_control(df_exp):
     plt.show()
 
 def grafico_drop_off_test_control(df_exp, df_final_web_data):
+
+    """
+    Genera un gráfico que muestra la caída de usuarios entre los distintos pasos para las distintas variaciones de test y control.
+
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico.
+    """ 
 
     import matplotlib.pyplot as plt
     import seaborn as sns
@@ -409,6 +598,16 @@ def grafico_drop_off_test_control(df_exp, df_final_web_data):
     plt.show()
 
 def grafico_tiempo_promedio_entre_pasos_test_control(df_exp, df_final_web_data):
+
+    """
+    Genera un gráfico que muestra el tiempo promedio entre pasos para las distintas variaciones de test y control.
+
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico.
+    """
 
     import pandas as pd
     import plotly.express as px
@@ -463,6 +662,16 @@ def grafico_tiempo_promedio_entre_pasos_test_control(df_exp, df_final_web_data):
     fig.show()
 
 def grafico_tasa_de_conversion_por_paso_test_control(df_exp, df_final_web_data):
+
+    """
+    Genera un gráfico que muestra la tasa de conversión por paso para las distintas variaciones de test y control.
+
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico.
+    """
 
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -542,6 +751,16 @@ def grafico_tasa_de_conversion_por_paso_test_control(df_exp, df_final_web_data):
     plt.show()
 
 def grafico_tasa_conversion_test_control(df_exp, df_final_web_data):
+
+    """
+    Genera un gráfico que muestra la tasa de conversión total para las distintas variaciones de test y control.
+
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico.
+    """
     
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -638,6 +857,16 @@ def test_hipotesis_tasa_conversion(df_final_web_data, df_exp, alpha=0.05, altern
 
 def grafico_tasa_abandono_test_control(df_exp, df_final_web_data):
 
+    """
+    Genera un gráfico que muestra la tasa de abandono para las distintas variaciones de test y control.
+
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico.
+    """
+
     import pandas as pd
     import matplotlib.pyplot as plt
     import seaborn as sns
@@ -671,6 +900,16 @@ def grafico_tasa_abandono_test_control(df_exp, df_final_web_data):
     plt.show()
 
 def grafico_tiempo_permanencia_test_control(df_exp, df_final_web_data):
+
+    """
+    Genera un gráfico que muestra el tiempo de permanencia de los usuarios para las distintas variaciones de test y control.
+
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico.
+    """
 
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -785,11 +1024,20 @@ def test_hipotesis_tiempo_permanencia(df_final_web_data, df_exp, alpha=0.05, alt
 
 def grafico_tiempo_permanencia_menor_10_secs(df_exp, df_final_web_data):
 
+    """
+    Genera un gráfico que muestra la cantidad de usuarios que permanecieron menos de 10 segundos en la plataforma para las distintas variaciones de test y control.
+
+    Argumentos:
+    - df_clientes_principales (DataFrame de Pandas): DataFrame que contiene los datos de los principales clientes.
+
+    Retorna:
+    - None: Esta función no devuelve ningún valor, simplemente muestra el gráfico.
+    """
+
     import pandas as pd
     import matplotlib.pyplot as plt
     import seaborn as sns
     
-
     #agrupamos el df_final_web_data con df_exp para añadir si el cliente ha visto la plataforma original o el test
     df_transacciones = df_final_web_data.merge(df_exp, how='left', left_on='client_id', right_on='client_id').dropna(subset='variation')
 
@@ -823,14 +1071,15 @@ def grafico_tiempo_permanencia_menor_10_secs(df_exp, df_final_web_data):
     #mostramos el gráfico
     plt.show()
 
-def normalizar_distribucion(df, column_name):
+def normalizar_distribucion_tiempo_permanencia(df_final_web_data, df_exp, version='Control'):
     
     """
-    Función para normalizar la distribución de una columna en un DataFrame.
+    Función para normalizar la distribución del tiempo de permanencia.
 
     Args:
-    df (DataFrame): El DataFrame que contiene los datos.
-    column_name (str): El nombre de la columna que se desea normalizar.
+    df_final_web_data (DataFrame): dataframe principal para generar los dataframes finales.
+    df_exp: dataframe principal para generar los dataframes finales.
+    version = 'Control' o 'Test'.
 
     Return:
     DataFrame: El DataFrame con la columna normalizada y algunas estadísticas.
@@ -844,54 +1093,88 @@ def normalizar_distribucion(df, column_name):
     from sklearn.preprocessing import PowerTransformer, StandardScaler
     from scipy.stats import johnsonsu, kstest
 
-    # Paso 1: Verificar la distribución original
-    sns.histplot(df[column_name], kde=True, bins=100)
-    plt.title("Distribución Original")
+    # Agrupar el dataframe final con el experimento para añadir si el cliente ha visto la plataforma original o el test
+    df_transacciones = df_final_web_data.merge(df_exp, how='left', left_on='client_id', right_on='client_id').dropna(subset='variation')
+
+    # Ordenar los valores del dataframe por cliente id, visita id y fecha
+    df_transacciones = df_transacciones.sort_values(by=['client_id', 'visit_id', 'date_time'])
+
+    # Crear una nueva columna en la que añadimos la fecha en la que el usuario realizó el paso anterior
+    df_transacciones['time_last_step'] = df_transacciones.groupby(by=['client_id', 'visit_id'])['date_time'].shift(1)
+
+    # Crear una nueva columna para añadir el paso anterior al actual
+    df_transacciones['last_step'] = df_transacciones.groupby(by=['client_id', 'visit_id'])['process_step'].shift(1)
+
+    # Restar la fecha del paso anterior a la del actual para ver cuánto ha tardado en pasar de un paso a otro
+    df_transacciones['time_difference'] = df_transacciones['date_time'] - df_transacciones['time_last_step']
+
+    # Agregar una nueva columna en la que incluimos el nombre del paso anterior y el paso actual
+    df_transacciones['steps'] = df_transacciones['process_step'].astype(str) + '_' + df_transacciones['last_step'].astype(str)
+
+    # Agrupar el dataframe por variación y tiempo de entrada y salida de cada usuario por id de visita
+    df_tiempo_de_permanencia = df_transacciones.groupby(by=['variation', 'visit_id'])['date_time'].agg(['max', 'min']).reset_index()
+
+    # Agregar una columna con el tiempo total por sesión de cada id de visita
+    df_tiempo_de_permanencia['difference_time'] = df_tiempo_de_permanencia['max'] - df_tiempo_de_permanencia['min']
+    
+    # Transformar el tiempo a segundos
+    df_tiempo_de_permanencia['difference_time_in_seconds'] = df_tiempo_de_permanencia['difference_time'].dt.total_seconds()
+
+    # Quedarse solo con la columna de variación y la diferencia de tiempo en segundos
+    df_tiempo_de_permanencia = df_tiempo_de_permanencia[['variation', 'difference_time_in_seconds']]
+
+    # Crear los dataframes finales para el análisis distinguiendo por variación: control y test
+    df_tiempo_de_permanencia_control = df_tiempo_de_permanencia[df_tiempo_de_permanencia['variation'] == 'Control']
+    df_tiempo_de_permanencia_test = df_tiempo_de_permanencia[df_tiempo_de_permanencia['variation'] == 'Test']
+    """
+    if version == 'Control':
+        standardized_data = ((df_tiempo_de_permanencia_control['difference_time_in_seconds'] - df_tiempo_de_permanencia_control['difference_time_in_seconds'].mean()) /
+                             df_tiempo_de_permanencia_control['difference_time_in_seconds'].std())
+        ks_test_statistic, ks_p_value = stats.kstest(standardized_data, 'norm')
+        if ks_p_value < 0.05:
+            print('La distribución de tiempo de permanencia en la versión de Control es diferente a una distribución normal')
+        else:
+            print('La distribución de tiempo de permanencia en la versión de Control no es significativamente diferente a la normal')
+    else:  # Para la versión de Test
+        standardized_data = ((df_tiempo_de_permanencia_test['difference_time_in_seconds'] - df_tiempo_de_permanencia_test['difference_time_in_seconds'].mean()) /
+                             df_tiempo_de_permanencia_test['difference_time_in_seconds'].std())
+        ks_test_statistic, ks_p_value = stats.kstest(standardized_data, 'norm')
+    """
+
+    #eliminamos los outliers
+    Q1 = df_tiempo_de_permanencia_control['difference_time_in_seconds'].quantile(0.25)
+    Q3 = df_tiempo_de_permanencia_control['difference_time_in_seconds'].quantile(0.75)
+    IQR = Q3 - Q1
+
+    #establecemos los límites de los outliers
+    limite_bajo = Q1 - 1 * IQR
+    limite_alto = Q3 + 1 * IQR
+
+    #identificamos los outliers y los filtramos de la tabla
+    df_tiempo_de_permanencia_control = df_tiempo_de_permanencia_control[(df_tiempo_de_permanencia_control['difference_time_in_seconds'] >= limite_bajo) & (df_tiempo_de_permanencia_control['difference_time_in_seconds'] <= limite_alto)]
+
+
+    # Realizar la transformación de Johnson-SU
+    params = johnsonsu.fit(df_tiempo_de_permanencia_control['difference_time_in_seconds'])
+    transformed_data = johnsonsu(*params).rvs(len(df_tiempo_de_permanencia_control['difference_time_in_seconds']))
+    standardized_transformed_data = StandardScaler().fit_transform(transformed_data.reshape(-1, 1))
+
+    # Realizar la prueba de Kolmogorov-Smirnov para normalidad en los datos transformados
+    ks_result = kstest(standardized_transformed_data.flatten(), 'norm')
+
+    # Graficar la distribución transformada
+    sns.histplot(transformed_data, kde=False)
+    plt.title("Distribución Johnson-SU")
     plt.show()
 
-    # Paso 2: Aplicar Box-Cox Transformation
-    boxcox_data, lmbda = stats.boxcox(df[column_name] + 1)  # Se suma 1 para evitar log(0)
-    boxcox_data_standardized = StandardScaler().fit_transform(boxcox_data.reshape(-1, 1))
+    import plotly.express as px
+    px.data.tips()
+    fig = px.histogram(pd.DataFrame(transformed_data)[0], nbins=100)
+    fig.show()
 
-    # Realizar la prueba de Kolmogorov-Smirnov para normalidad
-    ks_result_boxcox = kstest(boxcox_data_standardized, 'norm')
-
-    # Graficar la distribución de Box-Cox
-    sns.histplot(boxcox_data, kde=True)
-    plt.title("Distribución Box-Cox")
-    plt.show()
-
-    print(f'KS Test Statistic (Box-Cox): {ks_result_boxcox.statistic}, p-value: {ks_result_boxcox.pvalue}')
-    print(f'Lambda used for Box-Cox transformation: {lmbda}')
-
-    # Paso 3: Aplicar Yeo-Johnson Transformation
-    pt = PowerTransformer(method='yeo-johnson')
-    yeojohnson_data = pt.fit_transform(df[[column_name]])
-
-    # Realizar la prueba de Kolmogorov-Smirnov para normalidad
-    ks_result_yeojohnson = kstest(yeojohnson_data.flatten(), 'norm')
-
-    # Graficar la distribución de Yeo-Johnson
-    sns.histplot(yeojohnson_data.flatten(), kde=True)
-    plt.title("Distribución Yeo-Johnson")
-    plt.show()
-
-    print(f'KS Test Statistic (Yeo-Johnson): {ks_result_yeojohnson.statistic}, p-value: {ks_result_yeojohnson.pvalue}')
-
-    # Paso 4: Aplicar Rankeo
-    ranked_data = df[column_name].rank()
-    ranked_data_standardized = StandardScaler().fit_transform(ranked_data.values.reshape(-1, 1))
-
-    # Realizar la prueba de Kolmogorov-Smirnov para normalidad
-    ks_result_ranked = kstest(ranked_data_standardized.flatten(), 'norm')
-
-    # Graficar la distribución de Rankeo
-    sns.histplot(ranked_data, kde=True)
-    plt.title("Distribución de Rankeo")
-    plt.show()
-
-    print(f'KS Test Statistic (Ranked): {ks_result_ranked.statistic}, p-value: {ks_result_ranked.pvalue}')
-
-    # Retornar el DataFrame con las transformaciones aplicadas
-    return df, lmbda
-
+    # Conclusión
+    if ks_p_value < 0.05:
+        print('La distribución no se ha podido normalizar.')
+        print('Se emplearán algoritmos que permitan distribuciones no normales.')
+    else:
+        print('La distribución se ha normalizado con éxito.')
