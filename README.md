@@ -47,19 +47,19 @@ Gráfica que muestra el número de cuentas por dinero en cuenta.
 
 Gráfica que muestra el tráfico de usuarios por variación.
 
-[Tráfico de Usuarios por mes y días por Variación](https://drive.google.com/uc?export=view&id=1ZrNr9SmrotbzmeuDrMtrfnIIKE5ygnMD)
+[Tráfico de Usuarios por mes y días por Variación](https://drive.google.com/uc?export=view&id=1oJ2V4e_beQvSohDRZamHMJrYs_oHKC5e)
 
 Gráfica que muestra el tráfico de usuarios por mes y días por variación.
 
-[Tráfico de Usuarios por hora por Variación](https://drive.google.com/uc?export=view&id=19bxKCoSNzVgTTzFHhPb7o7LPzzpm1Jhu)
+[Tráfico de Usuarios por hora por Variación](https://drive.google.com/uc?export=view&id=1ghsRNMYwkGk7jUPuSsckP9LaBW_dWs12)
 
 Gráfica que muestra el tráfico de usuarios por hora por variación.
 
-[Tiempo medio de permanencia en la plataforma](https://drive.google.com/uc?export=view&id=1FzSuLIeu8PGdw7o6EVNzt3YYn6wQCqoX)
+[Tiempo medio de permanencia en la plataforma](https://drive.google.com/uc?export=view&id=1p-uybXAltETTJSc67TiPm7-1NFcT2AWo)
 
 Gráfica que muestra el tiempo medio de permanencia en la plataforma por variación. 
 
-[Tiempo de permanencia de los usuarios menor de 10 Segundos](https://drive.google.com/uc?export=view&id=1pKu22D54kfwOQskgLkn-1FGk2Rq9JhBz)
+[Tiempo de permanencia de los usuarios menor de 10 Segundos](https://drive.google.com/uc?export=view&id=1PbfhiaClIZBPA0qLZ388Qz8dLFkwnSOg)
 
 Gráfica que muestra el tiempo de permanencia de los usuarios menor de 10 segundos por variación.
 
@@ -83,7 +83,7 @@ Gráfica que muestra el total de errores en cada paso por variación.
 
 Gráfica que muestra el total de errores por los usuarios por variación.
 
-![Tasa de Abandono Total por Vareación](https://drive.google.com/uc?export=18UZp6JzHLSGkr3PDBa_vWLBMbMFUXcW8)
+![Tasa de Abandono Total por Vareación](https://drive.google.com/uc?export=1hB6kBJIOrc-bigz2aiA7BfLwuS9bbUKx)
 
 Gráfica que muestra total de abandono por variación.
 
