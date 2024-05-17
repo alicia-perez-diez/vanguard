@@ -47,19 +47,19 @@ Gráfica que muestra el número de cuentas por dinero en cuenta.
 
 Gráfica que muestra el tráfico de usuarios por variación.
 
-[Tráfico de Usuarios por mes y días por Variación](https://drive.google.com/uc?export=view&id=1oJ2V4e_beQvSohDRZamHMJrYs_oHKC5e)
+![Tráfico de Usuarios por mes y días por Variación](https://drive.google.com/uc?export=view&id=1oJ2V4e_beQvSohDRZamHMJrYs_oHKC5e)
 
 Gráfica que muestra el tráfico de usuarios por mes y días por variación.
 
-[Tráfico de Usuarios por hora por Variación](https://drive.google.com/uc?export=view&id=1ghsRNMYwkGk7jUPuSsckP9LaBW_dWs12)
+![Tráfico de Usuarios por hora por Variación](https://drive.google.com/uc?export=view&id=1ghsRNMYwkGk7jUPuSsckP9LaBW_dWs12)
 
 Gráfica que muestra el tráfico de usuarios por hora por variación.
 
-[Tiempo medio de permanencia en la plataforma](https://drive.google.com/uc?export=view&id=1p-uybXAltETTJSc67TiPm7-1NFcT2AWo)
+![Tiempo medio de permanencia en la plataforma](https://drive.google.com/uc?export=view&id=1p-uybXAltETTJSc67TiPm7-1NFcT2AWo)
 
 Gráfica que muestra el tiempo medio de permanencia en la plataforma por variación. 
 
-[Tiempo de permanencia de los usuarios menor de 10 Segundos](https://drive.google.com/uc?export=view&id=1PbfhiaClIZBPA0qLZ388Qz8dLFkwnSOg)
+![Tiempo de permanencia de los usuarios menor de 10 Segundos](https://drive.google.com/uc?export=view&id=1PbfhiaClIZBPA0qLZ388Qz8dLFkwnSOg)
 
 Gráfica que muestra el tiempo de permanencia de los usuarios menor de 10 segundos por variación.
 
