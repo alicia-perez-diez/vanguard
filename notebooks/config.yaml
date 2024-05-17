@@ -1,5 +1,0 @@
-data:
-  pt_1: '..\vanguard\resources\df_final_web_data_pt_1.txt'
-  pt_2: '..\vanguard\resources\df_final_web_data_pt_2.txt'
-  demo_final: '..\vanguard\resources\df_final_demo.txt'
-  exp_client: '..\vanguard\resources\df_final_experiment_clients.txt'
