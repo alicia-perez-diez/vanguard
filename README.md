@@ -35,7 +35,7 @@ Y el enlace al tableau a<a href="https://public.tableau.com/app/profile/alicia.p
 
 Gráfica que muestra el género y edad de usuarios.
 
-![Fidelidad de Usuarios por variación](https://drive.google.com/uc?export=view&id=1wh6J-1eAxwv6vRTm_lWq6McZ5Gobd6FRie5I9k)
+![Fidelidad de Usuarios por variación](https://drive.google.com/uc?export=view&id=1eAxwv6vRTm_lWq6McZ5Gobd6FRie5I9k)
 
 Gráfica que muestra el porcentaje de fidelidad de los usuarios por variación.
 
