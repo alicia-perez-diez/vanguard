@@ -31,6 +31,10 @@ Y el enlace al tableau <a href="https://public.tableau.com/app/profile/alicia.p.
 
 ## 📊 Insights visuales
 
+![Tráfico de Usuarios por Variación](https://drive.google.com/uc?export=view&id=1r7XOvN4iGXRl3qe7l0WOrcn6Rf2x4T6K)
+
+Gráfica que muestra el tráfico de usuarios por variación.
+
 ![Género y edad de usuarios](https://drive.google.com/uc?export=view&id=1a5t66pQLHmVjPHzPVzoCfSRiQMxLkWGe)
 
 Gráfica que muestra el género y edad de usuarios.
@@ -42,10 +46,6 @@ Gráfica que muestra el porcentaje de fidelidad de los usuarios por variación.
 ![Número de cuentas por dinero en cuenta](https://drive.google.com/uc?export=view&id=1ujH1nzYWQdsHWt-pDmBY06pZ9atpepSw)
 
 Gráfica que muestra el número de cuentas por dinero en cuenta.
-
-![Tráfico de Usuarios por Variación](https://drive.google.com/uc?export=view&id=1r7XOvN4iGXRl3qe7l0WOrcn6Rf2x4T6K)
-
-Gráfica que muestra el tráfico de usuarios por variación.
 
 ![Tráfico de Usuarios por mes y días por Variación](https://drive.google.com/uc?export=view&id=1oJ2V4e_beQvSohDRZamHMJrYs_oHKC5e)
 
