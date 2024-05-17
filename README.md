@@ -57,7 +57,7 @@ Gráfica que muestra el tráfico de usuarios por hora por variación.
 
 [Tiempo medio de permanencia en la plataforma](https://drive.google.com/uc?export=view&id=1FzSuLIeu8PGdw7o6EVNzt3YYn6wQCqoX)
 
-Gráfica que muestra el tiempo medio de permanencia en la plataforma por variación.
+Gráfica que muestra el tiempo medio de permanencia en la plataforma por variación. 
 
 [Tiempo de permanencia de los usuarios menor de 10 Segundos](https://drive.google.com/uc?export=view&id=1pKu22D54kfwOQskgLkn-1FGk2Rq9JhBz)
 
