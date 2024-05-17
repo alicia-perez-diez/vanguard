@@ -7,7 +7,7 @@ Análisis preliminar de los resultados de un A/B test diseñado para comparar el
 ¡Hola, analista o curioso de los datos! 📈 Somos Alicia y Andrea, estudiantes de análisis de datos de Ironhack. En este notebook, analizamos la relación entre las características de las diferentes variaciones -tiempo de actividad- y pasos de seguimiento así como también género, edades, números de cuentas, etc.
 
 Puedes ver la presentación de nuestro proyecto en el siguiente <a href="https://docs.google.com/presentation/d/1vSNEadz79u18YiQYsnBKMEvWcnifkc6X7wpc-tL2ZQA/edit?usp=sharing">enlace.</a>
-Y el enlace al tableau a<a href="https://public.tableau.com/app/profile/alicia.p.rez1100/viz/tableau_dashboard_17157156255840/Story1">aquí.</a>.
+Y el enlace al tableau <a href="https://public.tableau.com/app/profile/alicia.p.rez1100/viz/tableau_dashboard_17157156255840/Story1">aquí</a>.
 
 ## Tabla de contenidos
 
