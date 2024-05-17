@@ -83,7 +83,7 @@ Gráfica que muestra el total de errores en cada paso por variación.
 
 Gráfica que muestra el total de errores por los usuarios por variación.
 
-![Tasa de Abandono Total por Vareación](https://drive.google.com/uc?export=1hB6kBJIOrc-bigz2aiA7BfLwuS9bbUKx)
+![Tasa de Abandono Total por Vareación](https://drive.google.com/uc?export=view&id=1hB6kBJIOrc-bigz2aiA7BfLwuS9bbUKx)
 
 Gráfica que muestra total de abandono por variación.
 
