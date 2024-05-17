@@ -10,6 +10,8 @@ from funciones import leer_datos, limpiar_dataframes, crear_dataframe_principale
 #llamamos al archivo desde el archivo yalm e importamos los dataframes
 yalm_path = "../config.yaml"
 
+"""Hemos cambiado las rutas de los archivos dentro del .yaml"""
+
 def main():
 
     df_final_demo, df_final_web_data, df_exp = leer_datos(yalm_path) 
