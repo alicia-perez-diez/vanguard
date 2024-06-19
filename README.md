@@ -15,7 +15,7 @@ And the Tableau link <a href="https://public.tableau.com/app/profile/alicia.p.re
 - Analysis structure
 - Visual insights
 
-## Metadatos
+## Metadata
 
 - Authors: Alicia Pérez and Andrea Wahnon
 - Creation Date: 17/05/2024
