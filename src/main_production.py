@@ -5,8 +5,7 @@ from funciones import leer_datos, limpiar_dataframes, crear_dataframe_principale
     grafico_num_cuentas_clientes_principales, mapa_calor_valores_numericos, grafico_dinero_y_num_cuentas, grafico_dinero_segun_edad, grafico_edad_genero_y_num_cuentas,\
     grafico_edad_genero_y_dinero, grafico_proporcion_test_control, grafico_drop_off_test_control, grafico_tiempo_promedio_entre_pasos_test_control,\
     grafico_tasa_de_conversion_por_paso_test_control, grafico_tasa_conversion_test_control, test_hipotesis_tasa_conversion, grafico_tasa_abandono_test_control,\
-    grafico_tiempo_permanencia_test_control,test_hipotesis_tiempo_permanencia, grafico_tiempo_permanencia_menor_10_secs, normalizar_distribucion_tiempo_permanencia
-
+    grafico_tiempo_permanencia_test_control,test_hipotesis_tiempo_permanencia, grafico_tiempo_permanencia_menor_10_secs
 #llamamos al archivo desde el archivo yalm e importamos los dataframes
 yalm_path = "../config.yaml"
 

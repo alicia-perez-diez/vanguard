@@ -1,90 +1,62 @@
-# Análisis de Vanguard 
+# A/B Test Analysis for Vanguard
 
-Análisis preliminar de los resultados de un A/B test diseñado para comparar el rendimiento de dos versiones de una página web: la versión original y una nueva variación. 
+Preliminary analysis of the results from an A/B test designed to compare the performance of two versions of a webpage: the original version and a new variation.
 
-## 👋 Introducción
+## 👋 Introduction
 
-¡Hola, analista o curioso de los datos! 📈 Somos Alicia y Andrea, estudiantes de análisis de datos de Ironhack. En este notebook, analizamos la relación entre las características de las diferentes variaciones -tiempo de actividad- y pasos de seguimiento así como también género, edades, números de cuentas, etc.
+Hello, data analyst or data enthusiast! 📈 We are Alicia and Andrea, data analysis students from Ironhack. In this notebook, we analyze the relationship between various features of the different variations—such as uptime and follow-up steps—as well as gender, age, account numbers, etc.
 
-Puedes ver la presentación de nuestro proyecto en el siguiente <a href="https://docs.google.com/presentation/d/1vSNEadz79u18YiQYsnBKMEvWcnifkc6X7wpc-tL2ZQA/edit?usp=sharing">enlace.</a>
-Y el enlace al tableau <a href="https://public.tableau.com/app/profile/alicia.p.rez1100/viz/tableau_dashboard_17157156255840/Story1">aquí</a>.
+You can view our project presentation at the following <a href="https://docs.google.com/presentation/d/1vSNEadz79u18YiQYsnBKMEvWcnifkc6X7wpc-tL2ZQA/edit?usp=sharing">link</a>.
+And the Tableau link <a href="https://public.tableau.com/app/profile/alicia.p.rez1100/viz/tableau_dashboard_17157156255840/Story1">here</a>.
 
-## Tabla de contenidos
+## Table of Contents
 
-- Metadatos
-- Estructura del análisis
-- Insights visuales
+- Metadata
+- Analysis structure
+- Visual insights
 
 ## Metadatos
 
-- Autores: Alicia Pérez y Andrea Wahnon.
-- Fecha de creación: 17/05/2024.
-- Última modificación: 17/05/2024.
+- Authors: Alicia Pérez and Andrea Wahnon
+- Creation Date: 17/05/2024
+- Last Modified: 17/05/2024
 
-## Estructura del análisis
+## Analysis Structure
 
-- Planificación del proyecto: definición de retos de negocio, búsqueda de hipótesis.
-- Limpieza y formateo previos con Python: agrupación preliminar para reducir el peso de la base de datos de usuarios.
-- Importación de datos: importación de los tres dataframes a Tableau.
-- Agrupación final y análisis estadístico con Tableau
-- Técnicas de visualización para la definición de la relación entre las características de las diferentes variaciones -tiempo de actividad- y pasos de seguimiento.
+- Project planning: defining business challenges and hypotheses
+- Preliminary cleaning and formatting with Python: initial grouping to reduce the weight of the user database
+- Data import: importing the three dataframes into Tableau
+- Final grouping and statistical analysis with Tableau
+- Visualization techniques to define the relationship between the features of the different variations—uptime and follow-up steps
 
 ## 📊 Insights visuales
 
 ![Tráfico de Usuarios por Variación](https://drive.google.com/uc?export=view&id=1r7XOvN4iGXRl3qe7l0WOrcn6Rf2x4T6K)
 
-Gráfica que muestra el tráfico de usuarios por variación.
-
 ![Género y edad de usuarios](https://drive.google.com/uc?export=view&id=1a5t66pQLHmVjPHzPVzoCfSRiQMxLkWGe)
-
-Gráfica que muestra el género y edad de usuarios.
 
 ![Fidelidad de Usuarios por variación](https://drive.google.com/uc?export=view&id=1eAxwv6vRTm_lWq6McZ5Gobd6FRie5I9k)
 
-Gráfica que muestra el porcentaje de fidelidad de los usuarios por variación.
-
 ![Número de cuentas por dinero en cuenta](https://drive.google.com/uc?export=view&id=1ujH1nzYWQdsHWt-pDmBY06pZ9atpepSw)
-
-Gráfica que muestra el número de cuentas por dinero en cuenta.
 
 ![Tráfico de Usuarios por mes y días por Variación](https://drive.google.com/uc?export=view&id=1oJ2V4e_beQvSohDRZamHMJrYs_oHKC5e)
 
-Gráfica que muestra el tráfico de usuarios por mes y días por variación.
-
 ![Tráfico de Usuarios por hora por Variación](https://drive.google.com/uc?export=view&id=1ghsRNMYwkGk7jUPuSsckP9LaBW_dWs12)
-
-Gráfica que muestra el tráfico de usuarios por hora por variación.
 
 ![Tiempo medio de permanencia en la plataforma](https://drive.google.com/uc?export=view&id=1p-uybXAltETTJSc67TiPm7-1NFcT2AWo)
 
-Gráfica que muestra el tiempo medio de permanencia en la plataforma por variación. 
-
 ![Tiempo de permanencia de los usuarios menor de 10 Segundos](https://drive.google.com/uc?export=view&id=1PbfhiaClIZBPA0qLZ388Qz8dLFkwnSOg)
-
-Gráfica que muestra el tiempo de permanencia de los usuarios menor de 10 segundos por variación.
 
 ![Tasa de conversion total](https://drive.google.com/uc?export=view&id=1syz2DptCpGMYQgfb0OXZVafBkH9OOK4y)
 
-Gráfica que muestra la tasa de conversión total.
-
 ![Drop-off total de cada paso por variación](https://drive.google.com/uc?export=view&id=1haiSHLumcFlypUQqN8Qcz_CuPeKYWgu2)
-
-Gráfica que muestra el drop off de cada paso por variación.
 
 ![Tiempo promedio entre pasos por variación](https://drive.google.com/uc?export=view&id=1CZjGD9oB67t6CGJjCslscmpTVUErZa-H)
 
-Gráfica que muestra el tiempo promedio entre pasos por variación.
-
 ![Total de errores cometidos en cada paso por variación](https://drive.google.com/uc?export=view&id=1FsKNKkgJUg_PvZH2D0-8rMr13PBJmNcG)
-
-Gráfica que muestra el total de errores en cada paso por variación.
 
 ![Total de errores cometidos por los usuarios por variación](https://drive.google.com/uc?export=view&id=1FpXoRIVm2r6df510kXNkUxweM1Ia1M6i)
 
-Gráfica que muestra el total de errores por los usuarios por variación.
-
 ![Tasa de Abandono Total por Vareación](https://drive.google.com/uc?export=view&id=1hB6kBJIOrc-bigz2aiA7BfLwuS9bbUKx)
 
-Gráfica que muestra total de abandono por variación.
-
-¡Gracias por leernos 😊!
+Thank you for reading 😊!
